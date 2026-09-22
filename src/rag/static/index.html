@@ -8,23 +8,35 @@
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <header>
-    <a href="/" class="brand">Referat <span>FRI</span></a>
-    <button id="new-conversation" type="button">Nov pogovor</button>
+  <header class="site-header">
+    <a href="/" class="brand">Referat</a>
+    <button id="new-conversation" type="button">Nov pogovor <span aria-hidden="true">+</span></button>
   </header>
   <main>
-    <h1>Vprašanja o študiju</h1>
-    <p id="mode-notice" class="mode-note"></p>
-    <form id="question-form">
-      <label for="question" class="sr-only">Vaše vprašanje</label>
-      <textarea id="question" name="question" rows="3" minlength="2" maxlength="2000" required placeholder="Napišite vprašanje …"></textarea>
-      <div class="form-bottom">
-        <span id="session-usage" role="status"></span>
-        <button id="submit" type="submit" disabled>Pošlji</button>
+    <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+      <span class="intro-label">ŠTUDIJ NA FRI</span>
+      <h1 id="welcome-title">Kaj vas zanima?</h1>
+      <p>Vprašajte o študiju. Odgovor poiščemo v pravilnikih in na straneh fakultete.</p>
+      <div class="suggestions" aria-label="Primeri vprašanj">
+        <button type="button" data-question="Kdaj lahko zamenjam izbirni predmet?">Menjava predmeta <span aria-hidden="true">↗</span></button>
+        <button type="button" data-question="Kako prijavim temo magistrske naloge?">Magistrska naloga <span aria-hidden="true">↗</span></button>
+        <button type="button" data-question="Kakšni so pogoji za napredovanje v višji letnik?">Napredovanje <span aria-hidden="true">↗</span></button>
       </div>
-    </form>
-    <p id="feedback" role="status" aria-live="polite"></p>
-    <div id="results" role="log" aria-label="Pogovor"></div>
+    </section>
+    <div id="results" role="log" aria-label="Pogovor" aria-live="polite" aria-relevant="additions"></div>
+    <div class="composer">
+      <p id="mode-notice" class="mode-note"></p>
+      <form id="question-form">
+        <label for="question" class="sr-only">Vaše vprašanje</label>
+        <textarea id="question" name="question" rows="2" minlength="2" maxlength="2000" required placeholder="Napišite vprašanje …" aria-describedby="feedback"></textarea>
+        <div class="form-bottom">
+          <span id="session-usage" role="status"></span>
+          <button id="submit" type="submit" disabled>Pošlji <span aria-hidden="true">↑</span></button>
+        </div>
+      </form>
+      <p id="feedback" role="status" aria-live="polite"></p>
+      <p class="disclaimer">Odgovor preverite v navedenih virih.</p>
+    </div>
   </main>
 </body>
 </html>

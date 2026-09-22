@@ -97,9 +97,9 @@ class MongoEvidenceStore:
 
     def __init__(self, database: Database) -> None:
         """Accept an existing client database without opening network connections."""
-        if not database.name.startswith("mag_rag"):
+        if not database.name.startswith("mag_rag") and database.name != "finrep_thesis":
             raise RetrievalError(
-                "The evidence store must use a dedicated mag_rag database"
+                "The evidence store must use mag_rag or the legacy finrep_thesis database"
             )
         if not database.write_concern.acknowledged:
             raise RetrievalError("Thesis storage requires acknowledged MongoDB writes")
@@ -249,8 +249,13 @@ class ThesisVectorIndex:
         collection: str = "mag_rag_chunks",
     ) -> None:
         """Inject storage and embedding clients for production or isolated tests."""
-        if not collection.startswith("mag_rag_"):
-            raise RetrievalError("Use a dedicated Qdrant collection prefixed mag_rag_")
+        if (
+            not collection.startswith("mag_rag_")
+            and collection != "finrep_thesis_chunks"
+        ):
+            raise RetrievalError(
+                "Use a mag_rag_ collection or legacy finrep_thesis_chunks"
+            )
         self.store = store
         self.vectors = vectors
         self.embedder = embedder

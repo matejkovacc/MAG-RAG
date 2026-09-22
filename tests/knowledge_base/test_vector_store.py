@@ -95,6 +95,43 @@ def index():
     vectors.close()
 
 
+def test_legacy_thesis_store_reuses_snapshot_without_reembedding(index) -> None:
+    """A renamed application can read the original thesis snapshot unchanged."""
+    index.store = MongoEvidenceStore(mongomock.MongoClient()["finrep_thesis"])
+    legacy = ThesisVectorIndex(
+        index.store,
+        index.vectors,
+        index.embedder,
+        index.profile,
+        "finrep_thesis_chunks",
+    )
+    prepared = corpus()
+    result = legacy.index(prepared)
+    calls = index.embedder.calls
+    reopened = ThesisVectorIndex(
+        legacy.store,
+        legacy.vectors,
+        index.embedder,
+        index.profile,
+        "finrep_thesis_chunks",
+    )
+    hits = reopened.search(prepared.corpus_id, "alpha", limit=1)
+    assert hits[0].snapshot_id == result["snapshot_id"]
+    assert "alpha rule" in hits[0].chunk.text
+    assert index.embedder.calls == calls
+
+
+@pytest.mark.parametrize("name", ["finrep", "finrep_thesis_unrelated"])
+def test_legacy_compatibility_still_rejects_unrelated_storage(index, name) -> None:
+    """Legacy compatibility is an exact exception, not a relaxed prefix guard."""
+    with pytest.raises(RetrievalError):
+        MongoEvidenceStore(mongomock.MongoClient()[name])
+    with pytest.raises(RetrievalError):
+        ThesisVectorIndex(
+            index.store, index.vectors, index.embedder, index.profile, name
+        )
+
+
 def test_index_preserves_shared_ids_sources_and_vector_rank(
     index: ThesisVectorIndex,
 ) -> None:

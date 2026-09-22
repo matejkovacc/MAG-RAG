@@ -43,6 +43,10 @@ def test_defaults_are_isolated_and_repr_excludes_secrets() -> None:
     [
         ("THESIS_MONGO_DB", "other"),
         ("THESIS_QDRANT_COLLECTION", "other"),
+        ("THESIS_MONGO_DB", "finrep"),
+        ("THESIS_MONGO_DB", "finrep_thesis_unrelated"),
+        ("THESIS_QDRANT_COLLECTION", "finrep"),
+        ("THESIS_QDRANT_COLLECTION", "finrep_thesis_unrelated"),
         ("AZURE_OPENAI_EMBEDDER_DIM", "0"),
         ("AZURE_OPENAI_EMBEDDER_DIM", "invalid"),
     ],
@@ -85,3 +89,16 @@ def test_cloud_disabled_before_reading_configuration(monkeypatch) -> None:
     with pytest.raises(RetrievalError, match="External API calls are disabled"):
         with configured_index():
             pytest.fail("Cloud access must be opt-in per invocation")
+
+
+def test_explicit_legacy_thesis_storage_is_supported() -> None:
+    """Reuse the old thesis storage only when selected explicitly in settings."""
+    settings = RetrievalSettings.from_values(
+        {
+            **values(),
+            "THESIS_MONGO_DB": "finrep_thesis",
+            "THESIS_QDRANT_COLLECTION": "finrep_thesis_chunks",
+        }
+    )
+    assert settings.mongo_database == "finrep_thesis"
+    assert settings.collection == "finrep_thesis_chunks"

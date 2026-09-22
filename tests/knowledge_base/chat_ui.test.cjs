@@ -24,6 +24,8 @@ class Element {
   }
   replaceChildren(...children) { this.children = []; this.append(...children); }
   addEventListener(name, handler) { this.listeners[name] = handler; }
+  setAttribute(name, value) { this[name] = value; }
+  scrollIntoView() {}
   focus() { this.focused = true; }
   get firstElementChild() { return this.children[0]; }
   remove() { this.parent.children = this.parent.children.filter(child => child !== this); }
@@ -42,14 +44,10 @@ function answer(text = "Synthetic response", status = "evidence_found") {
 }
 
 async function browser(options = {}) {
-  const ids = new Map();
-  const get = id => {
-    if (!ids.has(id)) ids.set(id, new Element());
-    return ids.get(id);
-  };
-  const empty = new Element();
-  empty.className = "empty";
-  get("results").append(empty);
+  // Read actual HTML IDs: missing elements must fail as they do in a browser.
+  const html = fs.readFileSync(path.join(__dirname, "../../src/rag/static/index.html"), "utf8");
+  const ids = new Map([...html.matchAll(/\bid="([^"]+)"/g)].map(match => [match[1], new Element()]));
+  const get = id => ids.get(id) ?? null;
   const requests = [];
   let allowance = options.allowance ?? 100;
   const fetch = async (url, init) => {
@@ -141,4 +139,46 @@ test("local source without a URL keeps its answer and omits the external link", 
   await app.ask("Follow-up question");
   assert.equal(app.requests[1].history[0].answer, "Synthetic response");
   assert.equal(app.get("results").querySelector(".source-url"), null);
+});
+
+test("answer hides welcome and reset restores the actual initial screen", async () => {
+  const app = await browser();
+  await app.ask("A question");
+  assert.equal(app.get("welcome").hidden, true);
+  assert.equal(app.get("feedback").textContent, "");
+  app.reset();
+  assert.equal(app.get("welcome").hidden, false);
+  assert.equal(app.get("question").focused, true);
+});
+
+test("multiple answer parts share one expandable source", async () => {
+  const app = await browser({ response: () => {
+    const result = answer();
+    result.parts.push({ text: "Another paragraph", citation_ids: ["current"] });
+    return result;
+  } });
+  await app.ask("Question with repeated evidence");
+  const sources = app.get("results").querySelector(".sources");
+  assert.equal(sources.children.filter(child => child.className === "source").length, 1);
+  assert.equal(sources.querySelector(".source-url").href, "https://example.org/fixture.pdf#page=1");
+});
+
+test("malformed or unsafe source links do not lose a valid answer", async () => {
+  for (const url of ["not a url", "javascript:alert(1)"]) {
+    const app = await browser({ response: () => {
+      const result = answer(); result.citations[0].url = url; return result;
+    } });
+    await app.ask("A question");
+    await app.ask("A follow-up");
+    assert.equal(app.requests[1].history[0].answer, "Synthetic response");
+    assert.equal(app.get("results").querySelector(".source-url"), null);
+  }
+});
+
+test("model and evidence text render as text rather than HTML", async () => {
+  const text = '<img src=x onerror="alert(1)">';
+  const app = await browser({ response: () => answer(text) });
+  await app.ask("A question");
+  assert.equal(app.get("results").querySelector(".answer-text").textContent, text);
+  assert.equal(app.get("results").querySelector(".answer-text").innerHTML, undefined);
 });

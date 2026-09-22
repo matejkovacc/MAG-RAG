@@ -47,12 +47,18 @@ class RetrievalSettings:
             raise RetrievalError("Missing configuration: " + ", ".join(missing))
         database = values.get("THESIS_MONGO_DB") or "mag_rag"
         collection = values.get("THESIS_QDRANT_COLLECTION") or "mag_rag_chunks"
-        if not database.startswith("mag_rag"):
+        # Reuse the explicitly selected thesis index from the original project.
+        if not database.startswith("mag_rag") and database != "finrep_thesis":
             raise RetrievalError(
-                "THESIS_MONGO_DB must be a dedicated database prefixed mag_rag"
+                "THESIS_MONGO_DB must use mag_rag or the legacy finrep_thesis database"
             )
-        if not collection.startswith("mag_rag_"):
-            raise RetrievalError("THESIS_QDRANT_COLLECTION must start with mag_rag_")
+        if (
+            not collection.startswith("mag_rag_")
+            and collection != "finrep_thesis_chunks"
+        ):
+            raise RetrievalError(
+                "THESIS_QDRANT_COLLECTION must use mag_rag_ or legacy finrep_thesis_chunks"
+            )
         try:
             dimensions = int(values.get("AZURE_OPENAI_EMBEDDER_DIM") or "3072")
         except ValueError:
