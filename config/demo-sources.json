@@ -1,0 +1,15 @@
+{
+  "corpus_id": "mag-rag-local-demo",
+  "sources": [
+    {
+      "id": "invented-demo-rules",
+      "institution": "MAG – RAG technical fixture",
+      "title": "Izmišljeni pravilnik za tehnični preizkus",
+      "local_path": "../examples/demo-source.md",
+      "accessed_on": "2026-09-22",
+      "document_type": "markdown",
+      "usage_note": "Original fictional fixture included only for local technical verification.",
+      "public_source_confirmed": true
+    }
+  ]
+}

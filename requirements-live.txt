@@ -1,0 +1,3 @@
+# Optional semantic indexing and Azure answer generation.
+-r requirements.txt
+langchain-openai==0.2.10

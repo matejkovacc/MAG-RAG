@@ -1,0 +1,23 @@
+{
+  "corpus_id": "fri-student-affairs-development",
+  "sources": [
+    {
+      "key": "fri-study-rules",
+      "title": "Študijski red UL FRI",
+      "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf",
+      "local_path": "../data/thesis/raw/fri-study-rules.pdf",
+      "excluded_pages": [1, 2, 12, 13, 14],
+      "excluded_edge_lines": ["Univerza v Ljubljani, Fakulteta za računalništvo in informatiko", "Področje - Študij"],
+      "notes": "Located via the official FRI regulations index on 2026-09-10. Exclude cover, contents and application forms from chunking, but preserve their extracted text. Review together with the separately published September amendment; no effective-date claim."
+    },
+    {
+      "key": "fri-study-rules-amendment-2026-09",
+      "title": "Študijski red o spremembi in dopolnitvi študijskega reda",
+      "url": "https://www.fri.uni-lj.si/upload/Studijski_red_o_dopolnitvah_Stud.pdf",
+      "local_path": "../data/thesis/raw/fri-study-rules-amendment-2026-09.pdf",
+      "excluded_pages": [1],
+      "excluded_edge_lines": ["Univerza v Ljubljani, Fakulteta za računalništvo in informatiko", "Področje - Študij"],
+      "notes": "Listed on the official index with date 8. 9. 2026. Separate amendment, not a replacement consolidated text. Full applicability review pending."
+    }
+  ]
+}

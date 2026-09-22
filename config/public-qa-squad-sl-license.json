@@ -1,0 +1,10 @@
+{
+  "dataset_name": "Slovene translation of the SQuAD2.0 dataset",
+  "dataset_url": "https://www.clarin.si/repository/xmlui/handle/11356/1756",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "checked_on": "2026-09-18",
+  "attribution": "Borovič, Mladen; Žagar, Kristjan; Ferme, Marko; Majninger, Sandi; Ojsteršek, Milan; Šmajdek, Uroš; Zirkelbach, Maj; Zupanič, Matjaž; Jazbinšek, Meta; Žitnik, Slavko; Robnik-Šikonja, Marko, 2022. Slovene translation of the SQuAD2.0 dataset. CLARIN.SI, handle 11356/1756.",
+  "permitted_use_confirmed": true,
+  "notes": "Repository landing page lists CC BY 4.0 and public access. Download manually from that record; retain attribution/license and mark modifications. This record does not cover other QAslovene datasets. No dataset downloaded by this project task."
+}

@@ -1,0 +1,4 @@
+# Full standalone test environment.
+-r requirements-live.txt
+pytest==8.4.1
+black==24.10.0

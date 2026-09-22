@@ -1,0 +1,45 @@
+{
+  "corpus_id": "fri-student-affairs-catalog-development",
+  "sources": [
+    {
+      "id": "fri-study-rules",
+      "institution": "UL FRI",
+      "title": "Študijski red UL FRI",
+      "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf",
+      "local_path": "../data/thesis/raw/fri-study-rules.pdf",
+      "accessed_on": "2026-09-10",
+      "document_type": "pdf",
+      "usage_note": "Official publicly published document, used for thesis research with attribution. No explicit open license established; redistribution terms need checking. Located via the official FRI regulations index on 2026-09-10. Exclude cover, contents and application forms from chunking, but preserve their extracted text. Review together with the separately published September amendment; no effective-date claim.",
+      "public_source_confirmed": true,
+      "excluded_pages": [
+        1,
+        2,
+        12,
+        13,
+        14
+      ],
+      "excluded_lines": [
+        "Univerza v Ljubljani, Fakulteta za računalništvo in informatiko",
+        "Področje - Študij"
+      ]
+    },
+    {
+      "id": "fri-study-rules-amendment-2026-09",
+      "institution": "UL FRI",
+      "title": "Študijski red o spremembi in dopolnitvi študijskega reda",
+      "url": "https://www.fri.uni-lj.si/upload/Studijski_red_o_dopolnitvah_Stud.pdf",
+      "local_path": "../data/thesis/raw/fri-study-rules-amendment-2026-09.pdf",
+      "accessed_on": "2026-09-10",
+      "document_type": "pdf",
+      "usage_note": "Official publicly published document, used for thesis research with attribution. No explicit open license established; redistribution terms need checking. Listed on the official index with date 8. 9. 2026. Separate amendment, not a replacement consolidated text. Full applicability review pending.",
+      "public_source_confirmed": true,
+      "excluded_pages": [
+        1
+      ],
+      "excluded_lines": [
+        "Univerza v Ljubljani, Fakulteta za računalništvo in informatiko",
+        "Področje - Študij"
+      ]
+    }
+  ]
+}

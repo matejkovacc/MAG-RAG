@@ -1,0 +1,366 @@
+[
+  {
+    "id": "pilot-01",
+    "content_sha256": "a41d3b60892655c5ca72a42b59feb6bf51b92af8ce84aa99795fcd4b1e3c8169",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-02",
+    "content_sha256": "99ac02fe6df73283ca079529023de4b69b005b7a5fa85105478abbd8f50a4807",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-03",
+    "content_sha256": "945694ee5f7038d2369109a70f8824ad0163e9844e80e2c3c1ee79093ce8a548",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-04",
+    "content_sha256": "9a07394167d59cdda315319684107a64bab0251a2bd7a2fd88bcbc8044dbcaeb",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-05",
+    "content_sha256": "d8d81bf6c7b1f2ad5ba2bbe65bcce8b990a5ce659a64b599af5d569078c81d08",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-06",
+    "content_sha256": "db7b427632d6f401f8c5ba7bd4f353427f225ac9a2a6736ef10a5f72132980cf",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-07",
+    "content_sha256": "373a8c47729d1f50c2c640e8ead5f537d2232451e00febca19be45133ccbb572",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-08",
+    "content_sha256": "f7056b4d8f9eb02188982682ba81af72626a1c3dc08632aacfaa0cc3cd5159e4",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-09",
+    "content_sha256": "e4a18b068cc937f09550d4929d4fffe877a59c8eb613a0cfbdd28bc3f8580ad9",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-10",
+    "content_sha256": "4536100a0e2a4d56616a0b24fc03b6fc747a2891d65721714b4124f5a9654ef2",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-11",
+    "content_sha256": "c37428e36fe00b3f672a0eadd53af9d7d9d2dbc8ccee7333381556a2a0e17255",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-12",
+    "content_sha256": "7d07b88b4b6cf2a1b724e7ec4fe8c56ef8e05f51b117982e6ae0f59a3aa1387b",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-13",
+    "content_sha256": "f3f50a133455f005a91bbcedb5bd36f01c2bf7078fdcfe024385241e80b490ed",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-14",
+    "content_sha256": "49e7e2c41485ca6c9844ec6a8325fa25fc3189f1cf3d978c1ffd1d87b63574d2",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-15",
+    "content_sha256": "a01a85f62937faff9377e42fc936c5fa6925e8003b69af453cdfcb605d83aa24",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-16",
+    "content_sha256": "d9ca7ffc706402aeee3a315182d02e330e4f32def53d3d7a207147f6fbba48b5",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-17",
+    "content_sha256": "c00c9c3f9259458e211beae8e88ab6476bf5ab252ec144a8aa6e252ed98c9460",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-18",
+    "content_sha256": "5de480cfdeee73c667a899faaa9299285643616db5a8308d526a0a7e3d9b0543",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-19",
+    "content_sha256": "79542dfdd1331dc18376104d35585267171a280926814dde904df10e8a0874c8",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-20",
+    "content_sha256": "bde43255d0bb1e20aef50b41bf22bf4fcd7d2511dabe49ef58affd1a81e73c5f",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-21",
+    "content_sha256": "4e9bdb2fc6f6f0a759f2a13e0c2cedee47d0a562c44cb67eae4094a773006121",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-22",
+    "content_sha256": "a345dd5b2652c9d29f1668e73f25cd8e22261d7f774b907c71ab3debf9f47a49",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-23",
+    "content_sha256": "1142355046a5f3ec340c681adc4d4539931984016d21eff2095735cce2a70635",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "pilot-24",
+    "content_sha256": "921d9ef7454045516c8ab377baf7ab8d8f89fbe35b8acb2544913e31515227c3",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "variant-electives-paraphrased",
+    "content_sha256": "adf415e0f0f5daa588b28c56224ab12661a121e6bf7b21be3a182207f220da30",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  },
+  {
+    "id": "variant-electives-word-order",
+    "content_sha256": "cde9b2fbebf75d769be34b1041c8ce4ad4f2f765cf902a48167a7a2dbd73020f",
+    "review_status": "unreviewed",
+    "reviewer_code": "",
+    "review_notes": "",
+    "checks": {
+      "question_clear": false,
+      "answer_correct": false,
+      "source_correct": false,
+      "sufficient_evidence": false,
+      "answerability_correct": false
+    }
+  }
+]

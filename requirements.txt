@@ -1,0 +1,6 @@
+# Offline preview only: no model SDK, FastAPI or Node installation is needed.
+-r requirements-base.txt
+qdrant-client==1.12.1
+pymongo==4.13.2
+mongomock==4.3.0
+python-dotenv==1.0.1

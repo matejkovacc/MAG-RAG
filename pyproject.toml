@@ -1,0 +1,12 @@
+[project]
+name = "mag-rag"
+version = "0.1.0"
+description = "RAG prototype for public student-affairs information"
+requires-python = ">=3.12,<3.13"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/knowledge_base"]
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]

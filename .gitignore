@@ -1,0 +1,21 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local source material, prepared corpora, databases and evaluation runs.
+data/*
+!data/README.md
+!data/source_documents/
+!data/source_documents/.gitkeep
+tmp/
+output/
+
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

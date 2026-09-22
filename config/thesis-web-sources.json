@@ -1,0 +1,39 @@
+{
+  "corpus_id": "fri-student-affairs-web-development",
+  "base_corpus": "../data/thesis/corpus.json",
+  "sources": [
+    {
+      "key": "fri-masters-faq",
+      "title": "Pogosta vprašanja – magistrski študij",
+      "url": "https://www.fri.uni-lj.si/sl/pogosta-vprasanja-2",
+      "notes": "Official master's FAQ. Public institutional content, not historical student correspondence. If used as retrieval evidence, do not evaluate against copies of its answers as an independent regulation-only benchmark."
+    },
+    {
+      "key": "fri-masters-thesis",
+      "title": "Magistrsko delo",
+      "url": "https://www.fri.uni-lj.si/sl/magistrsko-delo",
+      "notes": "Official master's thesis procedures. Source applicability and linked rules require review."
+    },
+    {
+      "key": "fri-student-status",
+      "title": "Študentski status",
+      "url": "https://www.fri.uni-lj.si/sl/studentski-status"
+    },
+    {
+      "key": "fri-exam-registration",
+      "title": "Prijava na izpite",
+      "url": "https://www.fri.uni-lj.si/sl/prijava-na-izpite"
+    },
+    {
+      "key": "fri-student-affairs",
+      "title": "Študentski referat",
+      "url": "https://www.fri.uni-lj.si/sl/studentski-referat"
+    },
+    {
+      "key": "fri-regulations-index",
+      "title": "Pravilniki, vloge, ceniki",
+      "url": "https://www.fri.uni-lj.si/sl/pravilniki-vloge-ceniki",
+      "notes": "An index of links is not the content of linked regulations. Link inventory is recorded for explicit corpus expansion; linked documents are not automatically ingested."
+    }
+  ]
+}

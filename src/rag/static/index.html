@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Referat</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand">Referat <span>FRI</span></a>
+    <button id="new-conversation" type="button">Nov pogovor</button>
+  </header>
+  <main>
+    <h1>Vprašanja o študiju</h1>
+    <p id="mode-notice" class="mode-note"></p>
+    <form id="question-form">
+      <label for="question" class="sr-only">Vaše vprašanje</label>
+      <textarea id="question" name="question" rows="3" minlength="2" maxlength="2000" required placeholder="Napišite vprašanje …"></textarea>
+      <div class="form-bottom">
+        <span id="session-usage" role="status"></span>
+        <button id="submit" type="submit" disabled>Pošlji</button>
+      </div>
+    </form>
+    <p id="feedback" role="status" aria-live="polite"></p>
+    <div id="results" role="log" aria-label="Pogovor"></div>
+  </main>
+</body>
+</html>

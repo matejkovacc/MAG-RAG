@@ -1,0 +1,1000 @@
+{
+  "schema_version": 2,
+  "name": "Controlled public-document development set",
+  "domain": "student_affairs",
+  "corpus_id": "fri-student-affairs-development",
+  "corpus_sha256": "7458f81eba6de5c7d14462b736ab909f26278afa06d2830ae49d26f3cafd05ff",
+  "seed": 42,
+  "generation_description": "Document-derived synthetic drafts, not actual student enquiries; existing pilot import or deterministic extractive templates.",
+  "items": [
+    {
+      "id": "pilot-01",
+      "question": "Do kdaj lahko zamenjam izbirni predmet, ki ga poslušam prvič?",
+      "expected_answer": "Izbirni predmet lahko zamenjaš najkasneje do vključno petka v tretjem tednu izvajanja, ko ga prvič poslušaš; pravilnik dopušča tudi izredne primere, na primer neizvajanje predmeta.",
+      "source_ids": [
+        "4ce148a8-ade5-5c5f-af24-08646016d195"
+      ],
+      "required_source_groups": [
+        [
+          "4ce148a8-ade5-5c5f-af24-08646016d195"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "4ce148a8-ade5-5c5f-af24-08646016d195",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 3,
+          "section": null,
+          "article": "4",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=3",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "4. člen  \n \nMenjave predmetov  \n \nV času študija na študijskem programu lahko študent  izbirne predmete  zamenja najkasneje do vključno petka \nv 3. tednu  izvajanja predmeta , ko predmet prvič posluša ali  v izrednih primerih (npr. neizvajanj e predmeta)."
+        }
+      ],
+      "category": "direct",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "electives",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-02",
+      "question": "Ta izbirni mi ne ustreza, prvič ga obiskujem. Do kdaj ga še lahko menjam?",
+      "expected_answer": "Rok je vključno petek v tretjem tednu izvajanja predmeta, ko ga prvič poslušaš. Predvideni so tudi izredni primeri, na primer neizvajanje predmeta.",
+      "source_ids": [
+        "4ce148a8-ade5-5c5f-af24-08646016d195"
+      ],
+      "required_source_groups": [
+        [
+          "4ce148a8-ade5-5c5f-af24-08646016d195"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "4ce148a8-ade5-5c5f-af24-08646016d195",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 3,
+          "section": null,
+          "article": "4",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=3",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "4. člen  \n \nMenjave predmetov  \n \nV času študija na študijskem programu lahko študent  izbirne predmete  zamenja najkasneje do vključno petka \nv 3. tednu  izvajanja predmeta , ko predmet prvič posluša ali  v izrednih primerih (npr. neizvajanj e predmeta)."
+        }
+      ],
+      "category": "informal",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "electives",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-03",
+      "question": "Kaj moram priložiti vlogi za priznavanje predmeta, opravljenega na drugem visokošolskem zavodu?",
+      "expected_answer": "Priložiti moraš učni načrt s podatki o kreditnem ovrednotenju ali spletni naslov tega opisa ter originalno potrdilo o opravljenih izpitih z datumom in doseženim rezultatom.",
+      "source_ids": [
+        "5f0b0e44-5102-535c-a529-cbeb2834f95d"
+      ],
+      "required_source_groups": [
+        [
+          "5f0b0e44-5102-535c-a529-cbeb2834f95d"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "5f0b0e44-5102-535c-a529-cbeb2834f95d",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 3,
+          "section": null,
+          "article": "5",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=3",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "5. člen  \n \nPriznavanje posameznih predmetov, opravljenih izven programa  \n \nŠtudent, ki je na drugem visokošolskem zavodu ali študijskem programu opravil predmet s podobno učno \nsnovjo kot eden od predmetov v študijskem programu, lahko ob vpisu ali prepisu na študijski program \nzaprosi za priznavanje tega predmeta . Vlogi mora priložiti učni načrt s podatki o kreditnem ovrednotenju \nopravljenega predmeta ali spletni naslov, kjer je ta opis dosegljiv, in originalno potrdilo o opravljenih izpitih, \nna katerem je informacija o datumu in doseženem rezultatu.  \n \nPredmeti z ožjega področja računalništva, opravljeni na študijskih programih z drugih področij , se praviloma \nne priznajo.  \n Vlogo za priznavanje predmeta pregleda prodekan, ki mora najpozneje v tridesetih dneh po prejemu vloge \nodločiti, ali izpit prizna, delno prizna ali ne prizna.  Pri tem se lahko posvetuje z učiteljem oz. nosilcem \npredmeta.  Če izpit delno prizna, mora določiti tudi vsebine, iz katerih mora študent opraviti preizkus znanja ."
+        }
+      ],
+      "category": "conditions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "recognition",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-04",
+      "question": "Kdo potrdi priznavanje študijskih obveznosti, opravljenih na izmenjavi?",
+      "expected_answer": "Priznavanje potrdi Komisija za študijske zadeve (KŠZ) na predlog koordinatorja za mednarodne izmenjave.",
+      "source_ids": [
+        "1a0296e6-8a44-5060-bbae-22b8768f0f51"
+      ],
+      "required_source_groups": [
+        [
+          "1a0296e6-8a44-5060-bbae-22b8768f0f51"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "1a0296e6-8a44-5060-bbae-22b8768f0f51",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 4,
+          "section": null,
+          "article": "6",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=4",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "6. člen  \n \nPriznavanje obveznosti, opravljenih v okviru izmenjav  \n \nŠtudentom, ki so v okviru različnih oblik izmenjave opravili del študija na tujih univerzah ali visokošolskih \nzavodih, se v skladu s pravili UL in Pravilnikom za izmenjave FRI priznavajo opravljene študijske obveznosti v obsegu, ki ustreza kreditnim točkam  ECTS na izmenjavi opravljenih strokovnih predmetov.  \n \nPriznavanje potrdi Komisija za študijske zadeve (v nadaljevanju: KŠZ ) na predlog koordinatorja za \nmednarodne izmenjave."
+        }
+      ],
+      "category": "direct",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "exchange",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-05",
+      "question": "Na programu, ki ga koordinira FRI, imam status in ob vpisu v prvi letnik že opravljenih 48 KT. Za koliko KT lahko vnaprej opravljam predmete drugega letnika?",
+      "expected_answer": "Za opisani primer 9. člen dovoljuje opravljanje predmetov drugega letnika v vrednosti 30 KT. Odobritev ni zagotovilo prostega mesta; število prijav se lahko omeji glede na prostorske in kadrovske možnosti.",
+      "source_ids": [
+        "31b8c06e-3913-5640-9adb-888716925e89",
+        "e8e7a3bd-1257-5834-a175-f58c7acc1485"
+      ],
+      "required_source_groups": [
+        [
+          "31b8c06e-3913-5640-9adb-888716925e89"
+        ],
+        [
+          "e8e7a3bd-1257-5834-a175-f58c7acc1485"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "31b8c06e-3913-5640-9adb-888716925e89",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 4,
+          "section": null,
+          "article": "9",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=4",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "9. člen  \n \nOpravljanje predmetov vnaprej  \n \nŠtudentom prve in druge stopnje , ki so izpolnili pogoje za ponavljanje letnika in so vpisani na študijske \nprograme,  ki jih koordinira FRI , se dovoli, da v naslednjem študijskem letu opravijo določeno število \npredmetov višjega letnika  istega programa . Opravljanje izpitov vnaprej je omogočeno v okviru vpisa v \nštudijskem informacijskem sistemu.  \n \nŠtudentom s statusom, ki imajo ob vpisu v 1. letnik  že opravljen del obveznosti,  se dovoli opravljanje:  \n• predmetov v vrednosti 30 KT 2. letnika, če so v 1. letniku že opravili 48 KT,  \n• predmetov v vrednosti 18 KT 2. letnika, če so v 1. letniku že opravili 42 KT,  \n• predmetov v vrednosti 6 KT 2. letnika, če so v 1. letniku že opravili 36 KT.  \n \nŠtudentom s statusom, ki imajo ob vpisu v 2. letnik  že opravljen del obveznosti,  se dovoli opravljanje:  \n• predmetov v vrednosti 36 KT 3. letnika, če so v 1. in 2. letniku skupaj že opravili 108 KT,"
+        },
+        {
+          "source_id": "e8e7a3bd-1257-5834-a175-f58c7acc1485",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 5,
+          "section": null,
+          "article": "9",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=5",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "• predmetov v vrednosti 24 KT 3. letnika, če so v 1. in 2. letniku skupaj že opravili 102 KT,  \n• predmetov v vrednosti  18 KT 3. letnika, če so v 1. in 2.  letniku skupaj že opravili 96 KT.  \n \nZa študente na interdisciplinarnih študijskih programih, ki jih ne koordinira FRI,  se upošteva študijski red \nčlanice koordinatorke študija.   \n \nŠtevilo prijav na posamezni predmet v posameznem študijskem letu se lahko omeji v skladu s prostorskimi \nin kadrovskimi možnostmi fakultete. Omenjeni kriterij velja tudi za študente ponavljalce, ki študijskih \nobveznosti pri dotičnem predmetu niso opravili v sklopu rednih študijskih obveznosti (če je kvota pri \npredhodno izbranem predmetu v trenutku vpisa že zasedena , si mora študent za opravljanje izbrati novi \npredmet). \n \nŠtudentom, ki opravljajo predmete vnaprej, se urnik ne prilagaja posebej. Študenti so prav tako sami \nodgovorni, da vnaprej izbirajo predmete, ki bodo skladni z njihovim programom študija v prihodnje (npr. \nmodulski predmeti), saj študijski informacijski sistem v tem primeru ne zagotavlja vseh morebitnih preverjanj \n(zaradi kasnejše možnosti izbire). Ko je študentu opravljanje predmeta vnaprej odobreno, se s tem tudi \nobveže, da ga bo zagotovo opravil, da zaključi štud ij (kljub morebitni neskladnosti z njegovimi kasnejšimi \nizbirami). Študentu se lahko predmet sicer zamenja v skladu s 4. členom tega pravilnika."
+        }
+      ],
+      "category": "conditions",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "advance",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-06",
+      "question": "Imam status in ob vpisu v drugi letnik na programu, ki ga koordinira FRI, skupno 102 KT iz prvih dveh letnikov. Koliko KT tretjega letnika lahko opravljam vnaprej in ali se mi urnik posebej prilagodi?",
+      "expected_answer": "Dovoljeno je opravljanje predmetov tretjega letnika v vrednosti 24 KT. Urnik se študentom, ki opravljajo predmete vnaprej, ne prilagaja posebej; število prijav se lahko omeji glede na možnosti fakultete.",
+      "source_ids": [
+        "31b8c06e-3913-5640-9adb-888716925e89",
+        "e8e7a3bd-1257-5834-a175-f58c7acc1485"
+      ],
+      "required_source_groups": [
+        [
+          "31b8c06e-3913-5640-9adb-888716925e89"
+        ],
+        [
+          "e8e7a3bd-1257-5834-a175-f58c7acc1485"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "31b8c06e-3913-5640-9adb-888716925e89",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 4,
+          "section": null,
+          "article": "9",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=4",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "9. člen  \n \nOpravljanje predmetov vnaprej  \n \nŠtudentom prve in druge stopnje , ki so izpolnili pogoje za ponavljanje letnika in so vpisani na študijske \nprograme,  ki jih koordinira FRI , se dovoli, da v naslednjem študijskem letu opravijo določeno število \npredmetov višjega letnika  istega programa . Opravljanje izpitov vnaprej je omogočeno v okviru vpisa v \nštudijskem informacijskem sistemu.  \n \nŠtudentom s statusom, ki imajo ob vpisu v 1. letnik  že opravljen del obveznosti,  se dovoli opravljanje:  \n• predmetov v vrednosti 30 KT 2. letnika, če so v 1. letniku že opravili 48 KT,  \n• predmetov v vrednosti 18 KT 2. letnika, če so v 1. letniku že opravili 42 KT,  \n• predmetov v vrednosti 6 KT 2. letnika, če so v 1. letniku že opravili 36 KT.  \n \nŠtudentom s statusom, ki imajo ob vpisu v 2. letnik  že opravljen del obveznosti,  se dovoli opravljanje:  \n• predmetov v vrednosti 36 KT 3. letnika, če so v 1. in 2. letniku skupaj že opravili 108 KT,"
+        },
+        {
+          "source_id": "e8e7a3bd-1257-5834-a175-f58c7acc1485",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 5,
+          "section": null,
+          "article": "9",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=5",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "• predmetov v vrednosti 24 KT 3. letnika, če so v 1. in 2. letniku skupaj že opravili 102 KT,  \n• predmetov v vrednosti  18 KT 3. letnika, če so v 1. in 2.  letniku skupaj že opravili 96 KT.  \n \nZa študente na interdisciplinarnih študijskih programih, ki jih ne koordinira FRI,  se upošteva študijski red \nčlanice koordinatorke študija.   \n \nŠtevilo prijav na posamezni predmet v posameznem študijskem letu se lahko omeji v skladu s prostorskimi \nin kadrovskimi možnostmi fakultete. Omenjeni kriterij velja tudi za študente ponavljalce, ki študijskih \nobveznosti pri dotičnem predmetu niso opravili v sklopu rednih študijskih obveznosti (če je kvota pri \npredhodno izbranem predmetu v trenutku vpisa že zasedena , si mora študent za opravljanje izbrati novi \npredmet). \n \nŠtudentom, ki opravljajo predmete vnaprej, se urnik ne prilagaja posebej. Študenti so prav tako sami \nodgovorni, da vnaprej izbirajo predmete, ki bodo skladni z njihovim programom študija v prihodnje (npr. \nmodulski predmeti), saj študijski informacijski sistem v tem primeru ne zagotavlja vseh morebitnih preverjanj \n(zaradi kasnejše možnosti izbire). Ko je študentu opravljanje predmeta vnaprej odobreno, se s tem tudi \nobveže, da ga bo zagotovo opravil, da zaključi štud ij (kljub morebitni neskladnosti z njegovimi kasnejšimi \nizbirami). Študentu se lahko predmet sicer zamenja v skladu s 4. členom tega pravilnika."
+        }
+      ],
+      "category": "multi_passage",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "advance",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-07",
+      "question": "Katera osnovna pogoja moram izpolniti, da lahko opravljam predmetni izpit?",
+      "expected_answer": "Opravljene morajo biti vse predpisane obveznosti predmeta, na izpit pa se moraš pravočasno prijaviti.",
+      "source_ids": [
+        "dda98914-a41a-54e8-bc2e-6097049448dc"
+      ],
+      "required_source_groups": [
+        [
+          "dda98914-a41a-54e8-bc2e-6097049448dc"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "dda98914-a41a-54e8-bc2e-6097049448dc",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 6,
+          "section": null,
+          "article": "14",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=6",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "14. člen  \n \nPredmetni izpit  je lahko pisni in/ali ustni. Predmetni izpit lahko opravlja le študent, ki je opravil vse \npredpisane obveznosti predmeta in se je pravočasno prijavil na izpit.  \n \nDiferencialni izpit opravlja študent  pred prepisom na študijske programe, katerih matična nosilka in \nizvajalka je UL FRI . \n \nDiplomski izpit  je končna oblika ocenjevanja usposobljenosti študenta prvostopenjskega študijskega \nprograma. Obliko in način opravljanja diplomskega izpita na FRI določa Pravilnik o diplomskem delu prvostopenjskih študijev Fakultete za računalništvo in informatiko UL.  \n \nMagistrski izpit  je končna oblika ocenjevanja usposobljenosti študenta drugostopenjskega študija. Obliko \nin način opravljanja magistrskega izpita na FRI določa Pravilnik o magistrskem delu na drugostopenjskih \nštudijskih programih Fakultete za računalništvo in informatiko UL."
+        }
+      ],
+      "category": "conditions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "exam_eligibility",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-08",
+      "question": "Kdaj se izteče rok za spletno prijavo na izpit in kaj velja, če sistem zadnji dan ne deluje?",
+      "expected_answer": "Rok se izteče ob 23:59 dva dni pred dnevom izpita. Če informacijski sistem na zadnji dan roka ne deluje, se rok ustrezno podaljša.",
+      "source_ids": [
+        "6c73ead9-dbfa-5f79-8269-bfb5b88babc0"
+      ],
+      "required_source_groups": [
+        [
+          "6c73ead9-dbfa-5f79-8269-bfb5b88babc0"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "6c73ead9-dbfa-5f79-8269-bfb5b88babc0",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 7,
+          "section": null,
+          "article": "19",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=7",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "19. člen  \n \nPrijava in odjava  \n \nNa vsak predmetni izpit se mora študent prijaviti v predpisanem roku preko spletnega študijskega \ninformacijskega sistema. Rok za prijavljanje na izpite se izteče ob 23:59 dva dni pred dnevom izpita. Po tem roku prijava na izpit ni več možna. Če informacijs ki sistem na zadnji dan roka za prijavo na izpit ne deluje, \nse rok za prijavo ustrezno podaljša. Učitelj sme vzeti na izpit samo tiste kandidate, ki so na seznamu \nprijavljenih kandidatov.  \n \nOdjava preko spletnega študijskega informacijskega sistema je možna v roku za prijavo na izpit. Kasneje se \nštudent lahko odjavi najkasneje do poldneva dan pred izpitom, in sicer le pri asistentu oziroma učitelju. \nUčitelj ali asistent je podatke o tako odjavljenih kandidatih nemudoma dolžan vnesti v spletni informacijski \nsistem ali jih v pisni obliki sporočiti v študentski referat.  \n Če študent zaradi višje sile ne more priti na izpit ali se iz istega razloga ni mogel pravočasno odjaviti in v \nroku 3 delovnih dni po izpitu oz. takoj po prenehanju obstoja opravičljivega razloga dostavi ustrezna dokazila,  se upošteva, kot da je bil pravočasno odjavljen.  Za presojo upravičenosti razloga je pristojen \nprodekan za pedagoško delo, ki odloči v 3 delovnih dneh od prejema dokazil. Odločitev je dokončna.  \n \nŠtudent a, ki se ni odjavil in ni prišel na katerikoli del predmetnega izpita ter za to nima"
+        }
+      ],
+      "category": "direct",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "exam_registration",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-09",
+      "question": "Spletni rok za odjavo od izpita je že mimo. Ali se še lahko odjavim pri učitelju?",
+      "expected_answer": "Po izteku spletnega roka se lahko odjaviš le pri asistentu oziroma učitelju, najkasneje do poldneva dan pred izpitom.",
+      "source_ids": [
+        "6c73ead9-dbfa-5f79-8269-bfb5b88babc0"
+      ],
+      "required_source_groups": [
+        [
+          "6c73ead9-dbfa-5f79-8269-bfb5b88babc0"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "6c73ead9-dbfa-5f79-8269-bfb5b88babc0",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 7,
+          "section": null,
+          "article": "19",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=7",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "19. člen  \n \nPrijava in odjava  \n \nNa vsak predmetni izpit se mora študent prijaviti v predpisanem roku preko spletnega študijskega \ninformacijskega sistema. Rok za prijavljanje na izpite se izteče ob 23:59 dva dni pred dnevom izpita. Po tem roku prijava na izpit ni več možna. Če informacijs ki sistem na zadnji dan roka za prijavo na izpit ne deluje, \nse rok za prijavo ustrezno podaljša. Učitelj sme vzeti na izpit samo tiste kandidate, ki so na seznamu \nprijavljenih kandidatov.  \n \nOdjava preko spletnega študijskega informacijskega sistema je možna v roku za prijavo na izpit. Kasneje se \nštudent lahko odjavi najkasneje do poldneva dan pred izpitom, in sicer le pri asistentu oziroma učitelju. \nUčitelj ali asistent je podatke o tako odjavljenih kandidatih nemudoma dolžan vnesti v spletni informacijski \nsistem ali jih v pisni obliki sporočiti v študentski referat.  \n Če študent zaradi višje sile ne more priti na izpit ali se iz istega razloga ni mogel pravočasno odjaviti in v \nroku 3 delovnih dni po izpitu oz. takoj po prenehanju obstoja opravičljivega razloga dostavi ustrezna dokazila,  se upošteva, kot da je bil pravočasno odjavljen.  Za presojo upravičenosti razloga je pristojen \nprodekan za pedagoško delo, ki odloči v 3 delovnih dneh od prejema dokazil. Odločitev je dokončna.  \n \nŠtudent a, ki se ni odjavil in ni prišel na katerikoli del predmetnega izpita ter za to nima"
+        }
+      ],
+      "category": "exceptions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "exam_registration",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-10",
+      "question": "Zaradi višje sile nisem mogel priti na izpit ali se pravočasno odjaviti. Kdaj dostavim dokazila in kdo odloči?",
+      "expected_answer": "Ustrezna dokazila dostavi v treh delovnih dneh po izpitu oziroma takoj po prenehanju opravičljivega razloga. O upravičenosti presodi prodekan za pedagoško delo v treh delovnih dneh od prejema dokazil; odločitev je dokončna. Ob izpolnjenih pogojih se šteje, da si bil pravočasno odjavljen.",
+      "source_ids": [
+        "6c73ead9-dbfa-5f79-8269-bfb5b88babc0"
+      ],
+      "required_source_groups": [
+        [
+          "6c73ead9-dbfa-5f79-8269-bfb5b88babc0"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "6c73ead9-dbfa-5f79-8269-bfb5b88babc0",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 7,
+          "section": null,
+          "article": "19",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=7",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "19. člen  \n \nPrijava in odjava  \n \nNa vsak predmetni izpit se mora študent prijaviti v predpisanem roku preko spletnega študijskega \ninformacijskega sistema. Rok za prijavljanje na izpite se izteče ob 23:59 dva dni pred dnevom izpita. Po tem roku prijava na izpit ni več možna. Če informacijs ki sistem na zadnji dan roka za prijavo na izpit ne deluje, \nse rok za prijavo ustrezno podaljša. Učitelj sme vzeti na izpit samo tiste kandidate, ki so na seznamu \nprijavljenih kandidatov.  \n \nOdjava preko spletnega študijskega informacijskega sistema je možna v roku za prijavo na izpit. Kasneje se \nštudent lahko odjavi najkasneje do poldneva dan pred izpitom, in sicer le pri asistentu oziroma učitelju. \nUčitelj ali asistent je podatke o tako odjavljenih kandidatih nemudoma dolžan vnesti v spletni informacijski \nsistem ali jih v pisni obliki sporočiti v študentski referat.  \n Če študent zaradi višje sile ne more priti na izpit ali se iz istega razloga ni mogel pravočasno odjaviti in v \nroku 3 delovnih dni po izpitu oz. takoj po prenehanju obstoja opravičljivega razloga dostavi ustrezna dokazila,  se upošteva, kot da je bil pravočasno odjavljen.  Za presojo upravičenosti razloga je pristojen \nprodekan za pedagoško delo, ki odloči v 3 delovnih dneh od prejema dokazil. Odločitev je dokončna.  \n \nŠtudent a, ki se ni odjavil in ni prišel na katerikoli del predmetnega izpita ter za to nima"
+        }
+      ],
+      "category": "exceptions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "exam_registration",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-11",
+      "question": "Menim, da sem bil na ustnem izpitu krivično ocenjen. Kdaj in komu lahko vložim pritožbo z zahtevo za dodatno izprašanje?",
+      "expected_answer": "Pritožbo z zahtevo, da te dodatno izprašajo, lahko vložiš pri dekanu prvi naslednji dan po koncu ustnega izpita.",
+      "source_ids": [
+        "32e84cc0-c228-5d97-bce9-19348d29e6b1"
+      ],
+      "required_source_groups": [
+        [
+          "32e84cc0-c228-5d97-bce9-19348d29e6b1"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "32e84cc0-c228-5d97-bce9-19348d29e6b1",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 9,
+          "section": null,
+          "article": "25",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=9",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "25. člen  \n \nPritožba na preverjanje znanja  \n \nŠtudent, ki meni, da je bil pri preverjanju znanja krivično ocenjen  ali da je bil izpit izveden na način, ki ni v \nskladu s študijskim redom univerze , lahko prvi naslednji dan po koncu ustnega izpita ali tri delovne dni po \ndatumu, določenemu za vpogled pisnega izpita  pri dekanu vloži pritožbo zoper oceno z zahtevo za ponovno \nocenjevanje pisnega izpita ali zahtevo, da se ga dodatno izpraša .  \n Dekan prvi delovni dan po prejemu zahteve imenuje tričlansko komisijo, ki je ne more voditi izpraševalec, \nzoper katerega je kandidat vložil zahtevo za ponovno ocenjevanje pisnega izpita  ali zahtevo, da se ga dodatno \nizpraša. Če je vložena zahteva po ustnem izpitu, komisija prvi delovni dan po svojem imenovanju kandidata \ndodatno izpraša in oceni. Če je vložena zahteva za ponovno ocenjevanje pisnega izpita, komisija prvi delovni dan po svojem imenovanju kandidatov izpitni izdelek pregleda in ponovno oceni. Zoper oceno komisije ni pritožbe."
+        }
+      ],
+      "category": "conditions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "appeal",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-12",
+      "question": "Ali lahko neuspešno opravljen izpit ponavljam v istem izpitnem obdobju in kakšen mora biti razmik?",
+      "expected_answer": "Da. Med neuspešno opravljenim izpitom in njegovim ponavljanjem mora miniti več kot deset dni.",
+      "source_ids": [
+        "e5d60010-d38a-5d5d-b602-63ca30be4afc"
+      ],
+      "required_source_groups": [
+        [
+          "e5d60010-d38a-5d5d-b602-63ca30be4afc"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "e5d60010-d38a-5d5d-b602-63ca30be4afc",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 9,
+          "section": null,
+          "article": "26",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=9",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "26. člen  \n \nPonavljanje izpita  \n \nŠtudent, ki izpita ni opravil uspešno, lahko izpit ponavlja. Če ni s Statutom UL drugače določeno, lahko študent izpit ponavlja trikrat. Ponavljanje izpita je mogoče v istem izpitnem obdobju, s tem da mora med \nneuspešno opravljenim izpitom in njegovim pona vljanjem miniti več kot 10 dni. Za ponavljanje se ne šteje \nponovno opravljanje izpita na temelju uspešne pritožbe zoper izpitno oceno.  \n \nV izjemnih primerih, ko ima študent utemeljen razlog, lahko zaprosi KŠZ za četrto ponavljanje (peto \nopravljanje) predmetnega izpita. Pred petim opravljanjem izpita se mora študent udeležiti razgovora z \nizvajalcem predmeta, ki potrdi študentovo prošnjo na predpisanem obrazcu (priloga 7). Študent odda podpisan obrazec v študentski referat najkasneje 30 dni pred izpitnim rokom.  \n \nŠtudent, ki tudi pri zadnjem možnem opravljanju v skladu s Statutom UL izpita ne opravi, ne more dokončati \nštudija v tem študijskem programu, lahko pa opravlja druge študijske obveznosti po programu, v katerega je vpisan, do izteka tekočega študijskega let a. Študent se v nadaljnjih študijskih letih ne more ponovno vpisati \nv isti letnik tega programa, prav tako ne more v tem programu napredovati v višji letnik.  \n Če je študent ponovno vpisan v isti letnik, se šteje, da posamezni izpit iz tega letnika opravlja prvič, ko po ponovnem vpisu prvič pristopi k temu izpitu, ne"
+        }
+      ],
+      "category": "conditions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "retaking",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-13",
+      "question": "Kako zaprosim za peto opravljanje predmetnega izpita in kdaj oddam obrazec?",
+      "expected_answer": "V izjemnem primeru z utemeljenim razlogom zaprosiš KŠZ za četrto ponavljanje, torej peto opravljanje. Pred petim opravljanjem opraviš razgovor z izvajalcem, ki potrdi prošnjo na predpisanem obrazcu. Podpisani obrazec oddaš v referat najkasneje 30 dni pred izpitnim rokom.",
+      "source_ids": [
+        "e5d60010-d38a-5d5d-b602-63ca30be4afc"
+      ],
+      "required_source_groups": [
+        [
+          "e5d60010-d38a-5d5d-b602-63ca30be4afc"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "e5d60010-d38a-5d5d-b602-63ca30be4afc",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 9,
+          "section": null,
+          "article": "26",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=9",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "26. člen  \n \nPonavljanje izpita  \n \nŠtudent, ki izpita ni opravil uspešno, lahko izpit ponavlja. Če ni s Statutom UL drugače določeno, lahko študent izpit ponavlja trikrat. Ponavljanje izpita je mogoče v istem izpitnem obdobju, s tem da mora med \nneuspešno opravljenim izpitom in njegovim pona vljanjem miniti več kot 10 dni. Za ponavljanje se ne šteje \nponovno opravljanje izpita na temelju uspešne pritožbe zoper izpitno oceno.  \n \nV izjemnih primerih, ko ima študent utemeljen razlog, lahko zaprosi KŠZ za četrto ponavljanje (peto \nopravljanje) predmetnega izpita. Pred petim opravljanjem izpita se mora študent udeležiti razgovora z \nizvajalcem predmeta, ki potrdi študentovo prošnjo na predpisanem obrazcu (priloga 7). Študent odda podpisan obrazec v študentski referat najkasneje 30 dni pred izpitnim rokom.  \n \nŠtudent, ki tudi pri zadnjem možnem opravljanju v skladu s Statutom UL izpita ne opravi, ne more dokončati \nštudija v tem študijskem programu, lahko pa opravlja druge študijske obveznosti po programu, v katerega je vpisan, do izteka tekočega študijskega let a. Študent se v nadaljnjih študijskih letih ne more ponovno vpisati \nv isti letnik tega programa, prav tako ne more v tem programu napredovati v višji letnik.  \n Če je študent ponovno vpisan v isti letnik, se šteje, da posamezni izpit iz tega letnika opravlja prvič, ko po ponovnem vpisu prvič pristopi k temu izpitu, ne"
+        }
+      ],
+      "category": "exceptions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "retaking",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-14",
+      "question": "Kdaj opravljam izpit pred komisijo in kdo jo določi?",
+      "expected_answer": "Četrto in peto opravljanje izpita potekata pred komisijo z najmanj dvema članoma. Komisijo določi prodekan za pedagoško delo.",
+      "source_ids": [
+        "8d5a8b5c-b2cf-53a0-a6ee-f58e8d18828e"
+      ],
+      "required_source_groups": [
+        [
+          "8d5a8b5c-b2cf-53a0-a6ee-f58e8d18828e"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "8d5a8b5c-b2cf-53a0-a6ee-f58e8d18828e",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 9,
+          "section": null,
+          "article": "26",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=9",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "ti v višji letnik.  \n Če je študent ponovno vpisan v isti letnik, se šteje, da posamezni izpit iz tega letnika opravlja prvič, ko po ponovnem vpisu prvič pristopi k temu izpitu, ne glede na to, ali je ob prvem vpisu v ta letnik k temu izpitu že pristopil.  \n \nŠtudent četrtič in petič opravlja izpit pred komisijo, ki jo sestavljata najmanj dva člana. Pri pisnem izpitu \nkomisija izdelek pregleda, ustni izpit pa se opravlja pred komisijo. Komisijo določi prodekan za pedagoško \ndelo. Nosilec predmeta je dolžan v štud entski referat dostaviti podpisan zapisnik o komisijskem izpitu, ki ga \npodpišeta oba prisotna člana (oziroma vsi prisotni člani, če jih je več), najkasneje teden dni po končanem \nkomisijskem izpitu.  \n Stroške opravljanja teh izpitov je študent dolžan poravnati po veljavnem ceniku."
+        }
+      ],
+      "category": "direct",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "retaking",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-15",
+      "question": "Pri izpitu sem bil dvakrat neuspešen, nato sem ga opravil. Ali lahko zdaj izboljšujem pozitivno oceno in pri koliko predmetih je izboljševanje sicer dovoljeno?",
+      "expected_answer": "Pri izpitu, pri katerem si bil dvakrat ali večkrat neuspešen, nimaš možnosti popravljanja pozitivne ocene. Sicer pravilnik dopušča izboljševanje pri največ treh predmetih med študijem, v katerem redno napreduješ, in enkratno ponavljanje uspešno opravljenega izpita pred zaključkom študija.",
+      "source_ids": [
+        "6a76bbd9-f41a-5eeb-b802-f907e55953b5",
+        "35e115e7-52f1-5df2-8990-d2f40b42253c"
+      ],
+      "required_source_groups": [
+        [
+          "6a76bbd9-f41a-5eeb-b802-f907e55953b5"
+        ],
+        [
+          "35e115e7-52f1-5df2-8990-d2f40b42253c"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "6a76bbd9-f41a-5eeb-b802-f907e55953b5",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 9,
+          "section": null,
+          "article": "27",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=9",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "27. člen  \n \nIzboljševanje  ocene  \n \nŠtudent, ki je izpit pri določeni učni enoti že uspešno opravil, želi pa boljšo oceno, lahko izpit enkrat ponavlja pred zaključkom študija. V kolikor želi študent zviševati oceno pri predmetu, ki se ne uvršča v predmetnik \ntekočega študijskega leta, mora po novno opravljati sprotne študijske obveznosti v skladu z učnim načrtom \npredmeta. Študent lahko oceno izboljšuje pri največ treh predmetih tekom študija, v katerem redno \nnapreduje.  \n \nV primeru ponavljanja izpita iz prejšnjega odstavka velja višja ocena, v evidenci sta vpisani oceni obeh \nopravljanj izpita."
+        },
+        {
+          "source_id": "35e115e7-52f1-5df2-8990-d2f40b42253c",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 10,
+          "section": null,
+          "article": "27",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=10",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "Študent nima možnosti popravljanja pozitivne ocene pri izpitu, pri katerem je bil dvakrat ali večkrat \nneuspešen."
+        }
+      ],
+      "category": "multi_passage",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "grade_improvement",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-16",
+      "question": "Kdo odloča o vpisu v višji letnik ali ponavljanju letnika pod izjemnimi pogoji?",
+      "expected_answer": "Odloča KŠZ, v skladu s Statutom UL in pravili FRI za vpis v višji letnik in ponavljanje v izjemnih primerih.",
+      "source_ids": [
+        "52f07bd1-9418-5ccb-983c-6a65890651bb"
+      ],
+      "required_source_groups": [
+        [
+          "52f07bd1-9418-5ccb-983c-6a65890651bb"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "52f07bd1-9418-5ccb-983c-6a65890651bb",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 10,
+          "section": null,
+          "article": "29",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=10",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "29. člen  \n V skladu s Statutom UL in s Pravili za vpis v višji letnik in ponavljanje letnika v izjemnih primerih  FRI se \nlahko študent vpiše v višji letnik ali ponavlja letnik pod izjemnimi pogoji.  O tem odloča KŠZ."
+        }
+      ],
+      "category": "direct",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "progression",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-17",
+      "question": "Kaj septembrska sprememba 8. člena določa glede trajanja veljavnosti sprotnih obveznosti in kateri datum začetka veljavnosti je zapisan v tej spremembi?",
+      "expected_answer": "Sprememba določa veljavnost obveznosti v tekočem študijskem letu in še dveh naslednjih študijskih letih. V 2. členu spremembe je zapisan začetek veljavnosti 9. 9. 2026.",
+      "source_ids": [
+        "ef0f935b-42c3-584a-b2af-6fec89f45579",
+        "2fffb117-4e2e-5030-8e6d-50cf075465c8"
+      ],
+      "required_source_groups": [
+        [
+          "ef0f935b-42c3-584a-b2af-6fec89f45579"
+        ],
+        [
+          "2fffb117-4e2e-5030-8e6d-50cf075465c8"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "ef0f935b-42c3-584a-b2af-6fec89f45579",
+          "document_id": "abd7915e-ea2b-5290-ae54-dfd48487f617",
+          "title": "Študijski red o spremembi in dopolnitvi študijskega reda",
+          "page": 2,
+          "section": null,
+          "article": "1",
+          "url": "https://www.fri.uni-lj.si/upload/Studijski_red_o_dopolnitvah_Stud.pdf#page=2",
+          "version": "4e7807d568519d9c70c0ffca219a2ecf97072460e5df9510f88ca300c3e34e7a",
+          "text": "1. člen  \n \n2. odstavek 8. člena Študijskega reda Fakultete za računalništvo in informatiko Univerze v Ljubljani se \nspremeni in dopolni tako, da se : \n- razveljavita in črtata sedanji 4.  in 5. stavek, ki se glasi ta: »Študent, ki je opravil sprotne obveznosti, lahko v \nroku 7 dni po objavi  ocen sprotnih obveznosti oceno zavrne in bo moral sprotne obveznosti ponovno \nopravjati v prihodnjem študijskem letu.  Po tem roku se sprotne obveznosti štejejo kot opravljene in lahko \nštudent oceno popravlja v smislu, kot to definira 27. člen. « \n-  namesto razveljavljenega in črtanega  4. stavka  se doda nov  4. stavek, ki se glasi:  \n \n»Obveznosti veljajo v tekočem študijskem letu in še dve naslednji študijski leti. «."
+        },
+        {
+          "source_id": "2fffb117-4e2e-5030-8e6d-50cf075465c8",
+          "document_id": "abd7915e-ea2b-5290-ae54-dfd48487f617",
+          "title": "Študijski red o spremembi in dopolnitvi študijskega reda",
+          "page": 2,
+          "section": null,
+          "article": "2",
+          "url": "https://www.fri.uni-lj.si/upload/Studijski_red_o_dopolnitvah_Stud.pdf#page=2",
+          "version": "4e7807d568519d9c70c0ffca219a2ecf97072460e5df9510f88ca300c3e34e7a",
+          "text": "2. člen  \n \nTa Študijski red o spremembi in dopolnitvi Študijskega reda Fakultete za računalništvo in informatiko \nUniverze v Ljubljani velja od dne  9. 9. 2026  dalje.  \n \n \nŠtevilka:  011-1/2026 -5 \nDatum :  8. 9. 2026      \nizr. prof. dr. Mojca Ciglarič  \nDekanja  \n \n \n \nObjava na Spletni strani UL FRI : 8. 9. 2026      \nOdgovorna oseba za objavo: Aleš Smonig Grnjak"
+        }
+      ],
+      "category": "amendment",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "amendment",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-18",
+      "question": "Kateri pravilnik ureja obliko in način opravljanja magistrskega izpita na FRI?",
+      "expected_answer": "To ureja Pravilnik o magistrskem delu na drugostopenjskih študijskih programih Fakultete za računalništvo in informatiko UL.",
+      "source_ids": [
+        "a1ca2236-f950-561c-9e93-c35138ebfd0b",
+        "dda98914-a41a-54e8-bc2e-6097049448dc"
+      ],
+      "required_source_groups": [
+        [
+          "a1ca2236-f950-561c-9e93-c35138ebfd0b",
+          "dda98914-a41a-54e8-bc2e-6097049448dc"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "a1ca2236-f950-561c-9e93-c35138ebfd0b",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 10,
+          "section": null,
+          "article": "31",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=10",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "31. člen  \n Zadnje dejanje študenta na prvostopenjskih študijskih programih FRI je diplomski izpit. Obliko in način \nopravljanja diplomskega izpita ureja Pravilnik o diplomskem delu prvostopenjskih študijev Fakultete za \nračunalništvo in informatiko UL.  \n Zadnje dejanje študenta na drugostopenjskih študijskih programih FRI je magistrski izpit. Obliko in način \nopravljanja magistrskega izpita ureja Pravilnik o magistrskem delu na drugostopenjskih študijskih programih \nFakultete za računalništvo in informatiko UL."
+        },
+        {
+          "source_id": "dda98914-a41a-54e8-bc2e-6097049448dc",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 6,
+          "section": null,
+          "article": "14",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=6",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "14. člen  \n \nPredmetni izpit  je lahko pisni in/ali ustni. Predmetni izpit lahko opravlja le študent, ki je opravil vse \npredpisane obveznosti predmeta in se je pravočasno prijavil na izpit.  \n \nDiferencialni izpit opravlja študent  pred prepisom na študijske programe, katerih matična nosilka in \nizvajalka je UL FRI . \n \nDiplomski izpit  je končna oblika ocenjevanja usposobljenosti študenta prvostopenjskega študijskega \nprograma. Obliko in način opravljanja diplomskega izpita na FRI določa Pravilnik o diplomskem delu prvostopenjskih študijev Fakultete za računalništvo in informatiko UL.  \n \nMagistrski izpit  je končna oblika ocenjevanja usposobljenosti študenta drugostopenjskega študija. Obliko \nin način opravljanja magistrskega izpita na FRI določa Pravilnik o magistrskem delu na drugostopenjskih \nštudijskih programih Fakultete za računalništvo in informatiko UL."
+        }
+      ],
+      "category": "direct",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "masters_thesis",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-19",
+      "question": "Ali se ocena diplome za prilogo k diplomi všteva v povprečje doseženih ocen?",
+      "expected_answer": "Ne. Besedilo 34. člena pravi, da se ocena diplome za prilogo k diplomi ne všteva v povprečje doseženih ocen.",
+      "source_ids": [
+        "a066407f-7a73-5228-84ae-0e095fb23296"
+      ],
+      "required_source_groups": [
+        [
+          "a066407f-7a73-5228-84ae-0e095fb23296"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "a066407f-7a73-5228-84ae-0e095fb23296",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 11,
+          "section": null,
+          "article": "34",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=11",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "• povprečno oceno vseh predmetov, ki se ocenjujejo na lestvici od 5 – 10, za kar se uporabi navadno \npovprečje, najprej na ravni predmeta (če ima predmet več kot eno oceno), potem pa še na ravni \nvseh predmetov; povprečna ocena se zaokroži na eno decimalko,  \n• skupno oceno zaključnega dela in njegovega zagovora na lestvici 6 –  10. \n \nOcene diplome se za prilogo k diplomi ne všteva v povprečje doseženih ocen."
+        }
+      ],
+      "category": "direct",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "degree_average",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-20",
+      "question": "Med izpitom sem odstopil. Kako sem ocenjen in ali moram izročiti izdelek tudi, če mislim, da ne bo pozitiven?",
+      "expected_answer": "Odstop med izpitom pomeni negativno oceno. Po koncu moraš izdelek izročiti v oceno tudi, če meniš, da ne bo pozitiven; če ga ne izročiš, se šteje, da si odstopil, in dobiš negativno oceno.",
+      "source_ids": [
+        "0cd7efc9-82bf-5eb6-ae36-8b917ae2446e"
+      ],
+      "required_source_groups": [
+        [
+          "0cd7efc9-82bf-5eb6-ae36-8b917ae2446e"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "0cd7efc9-82bf-5eb6-ae36-8b917ae2446e",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 8,
+          "section": null,
+          "article": "24",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=8",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "24. člen  \n \nČe kandidat med potekom izpita odstopi, je ocenjen negativno. Učitelj ali asistent, ki je pristojen za izvedbo \npisnega izpita oziroma pisnega dela predmetnega izpita, je dolžan preveriti navzočnost in istovetnost \nkandidatov. Kandidat se je dolžan pri tem i zkazati z uradnim dokumentom s fotografijo. Kandidat, ki se \nprijavi na izpit in k izpitu ne pristop i, je ocenjen z oceno 'nepristop.'  \n \nPo končanem izpitu je kandidat dolžan izročiti svoj izdelek v oceno, tudi če je prepričan, da ne bo dosegel \npozitivne ocene. Če tega ne naredi, se smatra, da je od izpita odstopil in v tem primeru dobi negativno oceno."
+        }
+      ],
+      "category": "conditions",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth.",
+      "family_id": "exam_withdrawal",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-21",
+      "question": "Koliko točno ECTS potrebujem za redno napredovanje iz prvega v drugi letnik magistrskega programa Računalništvo in informatika FRI v letu 2026/27? Prosim za konkretno številko.",
+      "expected_answer": "V tem korpusu ni dovolj podatkov za zanesljivo konkretno številko za navedeni program in leto. Ne izmišljaj si praga; potrebni so uradni pogoji programa.",
+      "source_ids": [],
+      "required_source_groups": [],
+      "supporting_passages": [],
+      "category": "missing_source",
+      "difficulty": "easy",
+      "answerable": false,
+      "expected_status": "no_evidence",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth. This expected behavior is an annotation decision: assess missing evidence or missing context, and do not penalize a safe explanatory abstention merely for different wording. Article 28 defers to programme accreditation. Article 9 KT thresholds concern taking courses in advance, not ordinary progression. A partial generic answer with an explicit lack of the requested number may deserve human credit even if strict status matching fails.",
+      "family_id": "missing_ects",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-22",
+      "question": "Kakšno bo jutri vreme v Ljubljani?",
+      "expected_answer": "Razpoložljivi študijski pravilniki ne vsebujejo vremenske napovedi. Za odgovor ni dovolj dokazov.",
+      "source_ids": [],
+      "required_source_groups": [],
+      "supporting_passages": [],
+      "category": "out_of_scope",
+      "difficulty": "easy",
+      "answerable": false,
+      "expected_status": "no_evidence",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth. This expected behavior is an annotation decision: assess missing evidence or missing context, and do not penalize a safe explanatory abstention merely for different wording.",
+      "family_id": "weather",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-23",
+      "question": "Koliko evrov znaša strošek četrtega opravljanja izpita na FRI v študijskem letu 2026/27?",
+      "expected_answer": "Korpus se sklicuje na veljavni cenik, ne vsebuje pa zanesljivega zneska za navedeno leto. Zneska ni mogoče navesti brez ustreznega cenika.",
+      "source_ids": [],
+      "required_source_groups": [],
+      "supporting_passages": [],
+      "category": "missing_source",
+      "difficulty": "easy",
+      "answerable": false,
+      "expected_status": "no_evidence",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth. This expected behavior is an annotation decision: assess missing evidence or missing context, and do not penalize a safe explanatory abstention merely for different wording. Article 26 refers to a price list; no price list is present. A citation-backed explanation of missing price information may deserve human credit even if its status is evidence_found.",
+      "family_id": "missing_fees",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "pilot-24",
+      "question": "Do kdaj moram to oddati?",
+      "expected_answer": "Za katero vlogo, dokument ali študijsko obveznost sprašuješ?",
+      "source_ids": [],
+      "required_source_groups": [],
+      "supporting_passages": [],
+      "category": "clarification",
+      "difficulty": "easy",
+      "answerable": false,
+      "expected_status": "needs_clarification",
+      "generation_method": "synthetic",
+      "review_status": "unreviewed",
+      "review_notes": "Draft paraphrase checked against extracted text by the assistant only. Human reviewer must check completeness, applicability, exceptions and source PDF; do not treat as approved ground truth. This expected behavior is an annotation decision: assess missing evidence or missing context, and do not penalize a safe explanatory abstention merely for different wording.",
+      "family_id": "ambiguous_deadline",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "variant-electives-paraphrased",
+      "question": "Kakšen je rok za menjavo izbirnega predmeta, ki ga obiskujem prvič?",
+      "expected_answer": "Izbirni predmet lahko zamenjaš najkasneje do vključno petka v tretjem tednu izvajanja, ko ga prvič poslušaš; pravilnik dopušča tudi izredne primere, na primer neizvajanje predmeta.",
+      "source_ids": [
+        "4ce148a8-ade5-5c5f-af24-08646016d195"
+      ],
+      "required_source_groups": [
+        [
+          "4ce148a8-ade5-5c5f-af24-08646016d195"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "4ce148a8-ade5-5c5f-af24-08646016d195",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 3,
+          "section": null,
+          "article": "4",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=3",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "4. člen  \n \nMenjave predmetov  \n \nV času študija na študijskem programu lahko študent  izbirne predmete  zamenja najkasneje do vključno petka \nv 3. tednu  izvajanja predmeta , ko predmet prvič posluša ali  v izrednih primerih (npr. neizvajanj e predmeta)."
+        }
+      ],
+      "category": "paraphrased",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "paraphrased",
+      "review_status": "unreviewed",
+      "review_notes": "Manually written synthetic variant; reference and applicability need human review.",
+      "family_id": "electives",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    },
+    {
+      "id": "variant-electives-word-order",
+      "question": "Izbirni predmet obiskujem prvič. Do kdaj ga lahko zamenjam?",
+      "expected_answer": "Izbirni predmet lahko zamenjaš najkasneje do vključno petka v tretjem tednu izvajanja, ko ga prvič poslušaš; pravilnik dopušča tudi izredne primere, na primer neizvajanje predmeta.",
+      "source_ids": [
+        "4ce148a8-ade5-5c5f-af24-08646016d195"
+      ],
+      "required_source_groups": [
+        [
+          "4ce148a8-ade5-5c5f-af24-08646016d195"
+        ]
+      ],
+      "supporting_passages": [
+        {
+          "source_id": "4ce148a8-ade5-5c5f-af24-08646016d195",
+          "document_id": "374924ef-c1de-54a2-9f5d-ec39f09c9503",
+          "title": "Študijski red UL FRI",
+          "page": 3,
+          "section": null,
+          "article": "4",
+          "url": "https://www.fri.uni-lj.si/upload/Pravilniki%2C%20prosnje%2C%20ceniki%20%28NEW%29/%C5%A0tudijski_red_UL_FRI_2026_%C4%8Dist.pdf#page=3",
+          "version": "26fbe13b3f7f0050af6a4d842bbee4be7a05780fbd8d095a77d1c860bae28232",
+          "text": "4. člen  \n \nMenjave predmetov  \n \nV času študija na študijskem programu lahko študent  izbirne predmete  zamenja najkasneje do vključno petka \nv 3. tednu  izvajanja predmeta , ko predmet prvič posluša ali  v izrednih primerih (npr. neizvajanj e predmeta)."
+        }
+      ],
+      "category": "word_order",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_status": "evidence_found",
+      "generation_method": "paraphrased",
+      "review_status": "unreviewed",
+      "review_notes": "Manually written synthetic variant; reference and applicability need human review.",
+      "family_id": "electives",
+      "split": "development",
+      "reviewer_code": null,
+      "review_checks": {},
+      "reviewed_content_sha256": null
+    }
+  ]
+}

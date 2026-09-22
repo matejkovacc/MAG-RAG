@@ -1,0 +1,14 @@
+[
+  {
+    "base_id": "pilot-01",
+    "id": "variant-electives-paraphrased",
+    "question": "Kakšen je rok za menjavo izbirnega predmeta, ki ga obiskujem prvič?",
+    "category": "paraphrased"
+  },
+  {
+    "base_id": "pilot-01",
+    "id": "variant-electives-word-order",
+    "question": "Izbirni predmet obiskujem prvič. Do kdaj ga lahko zamenjam?",
+    "category": "word_order"
+  }
+]

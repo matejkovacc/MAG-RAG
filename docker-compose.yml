@@ -1,0 +1,24 @@
+# Optional local databases for MAG - RAG.
+name: mag-rag
+services:
+  mongodb:
+    image: mongo:8.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:?Set MongoDB username in .env}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:?Set MongoDB password in .env}
+    ports:
+      - "127.0.0.1:${MONGO_PORT:-10100}:27017"
+    volumes:
+      - thesis_mongo_data:/data/db
+  qdrant:
+    image: qdrant/qdrant:v1.12.1
+    environment:
+      QDRANT__TELEMETRY_DISABLED: "true"
+      QDRANT__SERVICE__API_KEY: ${QDRANT_API_KEY:?Set Qdrant API key in .env}
+    ports:
+      - "127.0.0.1:${QDRANT_HTTP_PORT:-10060}:6333"
+    volumes:
+      - thesis_qdrant_data:/qdrant/storage
+volumes:
+  thesis_mongo_data:
+  thesis_qdrant_data:
