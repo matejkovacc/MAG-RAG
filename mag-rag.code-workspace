@@ -1,0 +1,12 @@
+{
+  "folders": [
+    {
+      "name": "MAG-RAG",
+      "path": "."
+    },
+    {
+      "name": "mag-rag-thesis",
+      "path": "../mag-rag-thesis"
+    }
+  ]
+}

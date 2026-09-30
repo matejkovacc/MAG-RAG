@@ -53,6 +53,11 @@ def parser() -> argparse.ArgumentParser:
     silver.add_argument("--seed", type=int, default=42)
     silver.add_argument("--limit", type=int, default=24)
     silver.add_argument("--output", type=Path, required=True)
+    office = commands.add_parser("import-office")
+    office.add_argument("--input", type=Path, required=True)
+    office.add_argument("--corpus", type=Path, required=True)
+    office.add_argument("--verification", type=Path, required=True)
+    office.add_argument("--output", type=Path, required=True)
     for name in (
         "validate-set",
         "review-template",
@@ -87,7 +92,12 @@ def parser() -> argparse.ArgumentParser:
             )
             command.add_argument(
                 "--origin",
-                choices=["all", "official_faq", "document_derived"],
+                choices=[
+                    "all",
+                    "official_faq",
+                    "document_derived",
+                    "real_student_office",
+                ],
                 default="all",
             )
             command.add_argument("--limit", type=int, default=5)
@@ -164,6 +174,13 @@ def main(argv=None) -> int:
             )
         return 0
     corpus = PreparedCorpus.model_validate_json(args.corpus.read_text(encoding="utf-8"))
+    if args.command == "import-office":
+        from .student_office import import_office_cases
+
+        dataset = import_office_cases(args.input, corpus, args.verification)
+        write_new(args.output, dataset.model_dump(mode="json"))
+        print(f"Imported {len(dataset.items)} real cases; human review pending")
+        return 0
     if args.command == "make-questions":
         if not 1 <= args.limit <= 10000:
             cli.error("--limit must be between 1 and 10000")
@@ -287,6 +304,13 @@ def main(argv=None) -> int:
             service.retrieval_limit = 5
             index = service.retriever.index
             active = index.store.get_active(corpus.corpus_id)
+            if (
+                dataset.corpus_snapshot_id
+                and active["snapshot_id"] != dataset.corpus_snapshot_id
+            ):
+                raise ValueError(
+                    "Published snapshot differs from reviewed evidence snapshot"
+                )
             metadata.update(
                 snapshot_id=active["snapshot_id"],
                 embedding=index.profile.model_dump(exclude={"endpoint"}),

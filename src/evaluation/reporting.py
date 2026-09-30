@@ -4,7 +4,11 @@ import csv
 from pathlib import Path
 
 
-ORIGINS = {"official_faq": "Official FAQ", "document_derived": "Created from documents"}
+ORIGINS = {
+    "official_faq": "Official FAQ",
+    "document_derived": "Created from documents",
+    "real_student_office": "Real student-office enquiry",
+}
 REVIEWS = {
     "approved": "Reviewed",
     "unreviewed": "Needs review",
@@ -28,7 +32,13 @@ METRICS = {
 
 def question_origin(generation_method: str) -> str:
     """Keep institutional FAQ publication separate from document-derived examples."""
-    return "official_faq" if generation_method == "official_faq" else "document_derived"
+    if generation_method == "official_faq":
+        return "official_faq"
+    return (
+        "real_student_office"
+        if generation_method == "student_office"
+        else "document_derived"
+    )
 
 
 def review_state(status: str) -> str:
@@ -76,6 +86,10 @@ def render_questions(items: list[dict], *, answers: bool = False) -> str:
                 "",
             ]
         )
+        if item.get("original_response") is not None:
+            lines.extend(
+                ["**Original office response**", "", item["original_response"], ""]
+            )
         lines.extend(
             "- " + label
             for label in display_sources(item.get("supporting_passages", []))

@@ -52,7 +52,7 @@ class OfficialFAQProvenance(BaseModel):
 
 
 class ControlledItem(BaseModel):
-    """A draft or human-reviewed case, never claimed to be a real student enquiry."""
+    """A draft or human-reviewed case with explicit origin when newly imported."""
 
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
     id: str = Field(min_length=1)
@@ -65,7 +65,11 @@ class ControlledItem(BaseModel):
     difficulty: Literal["easy", "medium", "hard"] = "easy"
     answerable: bool
     expected_status: Literal["evidence_found", "no_evidence", "needs_clarification"]
-    generation_method: Literal["synthetic", "manual", "paraphrased", "official_faq"]
+    generation_method: Literal[
+        "synthetic", "manual", "paraphrased", "official_faq", "student_office"
+    ]
+    data_origin: Literal["real", "synthetic"] | None = None
+    original_response: str | None = None
     official_faq: OfficialFAQProvenance | None = None
     review_status: Literal["unreviewed", "approved", "rejected", "needs_revision"] = (
         "unreviewed"
@@ -83,6 +87,10 @@ class ControlledItem(BaseModel):
         data = handler(self)
         if self.official_faq is None:
             data.pop("official_faq", None)
+        if self.data_origin is None:
+            data.pop("data_origin", None)
+        if self.original_response is None:
+            data.pop("original_response", None)
         return data
 
     def content_hash(self) -> str:
@@ -108,6 +116,15 @@ class ControlledItem(BaseModel):
             self.official_faq is not None
         ):
             raise ValueError("Official FAQ cases require explicit publisher provenance")
+        if self.generation_method == "student_office":
+            if self.data_origin != "real" or not (self.original_response or "").strip():
+                raise ValueError(
+                    "Real student-office cases require origin and original response"
+                )
+        elif self.data_origin == "real" or self.original_response is not None:
+            raise ValueError(
+                "Real office responses require student_office generation method"
+            )
         if not tokens(self.expected_answer):
             raise ValueError("Empty normalized expected answer")
         if (
@@ -159,6 +176,7 @@ class ControlledDataset(BaseModel):
     domain: Literal["student_affairs"] = "student_affairs"
     corpus_id: str
     corpus_sha256: str
+    corpus_snapshot_id: str | None = None
     seed: int = 42
     generation_description: str
     protocol: Literal["controlled", "official_faq_lookup"] = "controlled"
@@ -170,11 +188,18 @@ class ControlledDataset(BaseModel):
         data = handler(self)
         if self.protocol == "controlled":
             data.pop("protocol", None)
+        if self.corpus_snapshot_id is None:
+            data.pop("corpus_snapshot_id", None)
         return data
 
     @model_validator(mode="after")
     def check_duplicates(self):
         """Reject normalized duplicates and prevent family leakage between splits."""
+        if (
+            any(item.data_origin == "real" for item in self.items)
+            and not self.corpus_snapshot_id
+        ):
+            raise ValueError("Real cases require a verified corpus snapshot ID")
         if any(
             (item.generation_method == "official_faq")
             != (self.protocol == "official_faq_lookup")
@@ -336,10 +361,19 @@ def review_template(dataset: ControlledDataset) -> list[dict]:
             "id": item.id,
             "question": item.question,
             "expected_answer": item.expected_answer,
+            **(
+                {"original_response": item.original_response}
+                if item.original_response is not None
+                else {}
+            ),
             "origin": (
                 "Official FAQ"
                 if item.generation_method == "official_faq"
-                else "Created from documents"
+                else (
+                    "Real student-office enquiry"
+                    if item.data_origin == "real"
+                    else "Created from documents"
+                )
             ),
             "answerable": item.answerable,
             "supporting_passages": [
@@ -374,10 +408,19 @@ def apply_reviews(
         context = {
             "question": item.question,
             "expected_answer": item.expected_answer,
+            **(
+                {"original_response": item.original_response}
+                if item.original_response is not None
+                else {}
+            ),
             "origin": (
                 "Official FAQ"
                 if item.generation_method == "official_faq"
-                else "Created from documents"
+                else (
+                    "Real student-office enquiry"
+                    if item.data_origin == "real"
+                    else "Created from documents"
+                )
             ),
             "answerable": item.answerable,
             "supporting_passages": [

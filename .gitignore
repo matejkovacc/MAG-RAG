@@ -19,3 +19,14 @@ output/
 Thumbs.db
 .idea/
 .vscode/
+
+# Local credentials and manuscript/build copies.
+.env.*
+!.env.example
+/master-thesis-book/
+*.synctex.gz
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk

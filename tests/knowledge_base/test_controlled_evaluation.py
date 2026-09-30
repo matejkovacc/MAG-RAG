@@ -24,6 +24,7 @@ from src.evaluation.controlled_runner import (
 )
 from src.evaluation.metrics import answer_scores, retrieval_scores, text_metrics
 from src.evaluation.models import corpus_digest, load_benchmark
+from src.evaluation.student_office import import_office_cases
 from src.knowledge_base.catalog import prepare_text
 from src.knowledge_base.models import PreparedCorpus, SourceSpec
 from src.rag.answers import Answer, AnswerPart
@@ -340,7 +341,7 @@ def test_cli_guards_and_old_corpus_compatibility(fixture_set, tmp_path):
     with pytest.raises(SystemExit):
         main(args + ["--mode", "live", "--allow-unreviewed"])
     assert not (tmp_path / "never").exists()
-    corpus_path = Path("data/thesis/corpus.json")
+    corpus_path = Path("data/thesis/development/corpus.json")
     if not corpus_path.exists():
         pytest.skip("Public-source corpus is intentionally not distributed")
     corpus = PreparedCorpus.model_validate_json(corpus_path.read_text(encoding="utf-8"))
@@ -349,3 +350,76 @@ def test_cli_guards_and_old_corpus_compatibility(fixture_set, tmp_path):
     assert len(old.items) == len(imported.items) == 24
     assert imported.items[17].required_source_groups == old.items[17].evidence_groups
     assert audit_dataset(imported, corpus)["valid"]
+
+
+def test_real_office_import_preserves_origin_snapshot_and_review_boundary(
+    fixture_set, tmp_path
+):
+    """Synthetic software fixtures exercise the real-data path without claiming real data."""
+    corpus, old = fixture_set
+    source = tmp_path / "input.json"
+    verification = tmp_path / "verification.json"
+    verification.write_text(
+        json.dumps(
+            {
+                "ok": True,
+                "corpus_id": corpus.corpus_id,
+                "snapshot_id": "fixture-snapshot",
+                "mongo_chunks": 1,
+                "sources": [
+                    {
+                        "document_id": corpus.documents[0].source_id,
+                        "title": corpus.documents[0].source.title,
+                        "source_url": None,
+                        "pages": len(corpus.documents[0].pages),
+                        "chunks": len(corpus.documents[0].chunks),
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    case = {
+        "id": "fixture-1",
+        "question": "Kje je poskusni obrazec?",
+        "original_response": "Izmišljeni odgovor pisarne za test.",
+        "reference_answer": "Poskusni obrazec se hrani v testni mapi.",
+        "source_ids": old.items[0].source_ids,
+        "answerable": True,
+        "expected_status": "evidence_found",
+        "family_id": "fixture-family",
+        "split": "development",
+    }
+    batch = {
+        "name": "Synthetic software fixture",
+        "data_origin": "real",
+        "anonymized": True,
+        "cases": [case],
+    }
+    source.write_text(json.dumps(batch), encoding="utf-8")
+    imported = import_office_cases(source, corpus, verification)
+    item = imported.items[0]
+    assert imported.corpus_snapshot_id == "fixture-snapshot"
+    assert item.data_origin == "real" and item.review_status == "unreviewed"
+    assert item.original_response != item.expected_answer
+    assert item.supporting_passages[0].source_id == case["source_ids"][0]
+    assert audit_dataset(imported, corpus)["valid"]
+    review = review_template(imported)[0]
+    assert review["original_response"] == case["original_response"]
+    with pytest.raises(ValueError, match="Review context was edited"):
+        apply_reviews(imported, [{**review, "original_response": "Changed"}])
+    batch["cases"].append(
+        {
+            **case,
+            "id": "fixture-2",
+            "question": "Kje hranimo poskusni obrazec?",
+            "split": "test",
+        }
+    )
+    source.write_text(json.dumps(batch), encoding="utf-8")
+    with pytest.raises(ValueError, match="family"):
+        import_office_cases(source, corpus, verification)
+    batch["cases"] = [{**case, "source_ids": ["old-corpus-chunk"]}]
+    source.write_text(json.dumps(batch), encoding="utf-8")
+    with pytest.raises(ValueError, match="absent from selected corpus"):
+        import_office_cases(source, corpus, verification)

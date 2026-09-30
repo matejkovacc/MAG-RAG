@@ -3,6 +3,7 @@
 import hashlib
 import json
 import math
+import re
 from datetime import datetime, timezone
 from typing import Any, Literal, Protocol
 from uuid import uuid4
@@ -92,14 +93,27 @@ def validate_vectors(vectors: list[list[float]], count: int, dimensions: int) ->
             raise RetrievalError("Embedding dimension or numeric values are invalid")
 
 
+def validate_namespace(namespace: str) -> str:
+    """Require an explicit, bounded namespace for this project's storage."""
+    if not re.fullmatch(r"[a-z][a-z0-9_]{2,47}", namespace) or namespace in {
+        "admin",
+        "local",
+        "config",
+        "system",
+    }:
+        raise RetrievalError("Invalid thesis storage namespace")
+    return namespace
+
+
 class MongoEvidenceStore:
     """Stage immutable snapshots; publish through a single atomic pointer update."""
 
-    def __init__(self, database: Database) -> None:
-        """Accept an existing client database without opening network connections."""
-        if not database.name.startswith("mag_rag") and database.name != "finrep_thesis":
+    def __init__(self, database: Database, *, namespace: str = "mag_rag") -> None:
+        """Accept an existing database within the explicitly selected namespace."""
+        self.namespace = validate_namespace(namespace)
+        if database.name != namespace and not database.name.startswith(namespace + "_"):
             raise RetrievalError(
-                "The evidence store must use mag_rag or the legacy finrep_thesis database"
+                "The evidence database is outside the thesis namespace"
             )
         if not database.write_concern.acknowledged:
             raise RetrievalError("Thesis storage requires acknowledged MongoDB writes")
@@ -249,12 +263,9 @@ class ThesisVectorIndex:
         collection: str = "mag_rag_chunks",
     ) -> None:
         """Inject storage and embedding clients for production or isolated tests."""
-        if (
-            not collection.startswith("mag_rag_")
-            and collection != "finrep_thesis_chunks"
-        ):
+        if not collection.startswith(store.namespace + "_"):
             raise RetrievalError(
-                "Use a mag_rag_ collection or legacy finrep_thesis_chunks"
+                "The vector collection is outside the thesis namespace"
             )
         self.store = store
         self.vectors = vectors
@@ -328,10 +339,54 @@ class ThesisVectorIndex:
                     "status": "unchanged",
                 }
         snapshot_id = str(uuid4())
+        reusable = bool(
+            active
+            and active.get("embedding") == self.profile.model_dump()
+            and active.get("vector_collection") == self.collection
+        )
+        embedded_count = 0
+        reused_count = 0
         for offset in range(0, len(chunks), batch_size):
             batch = chunks[offset : offset + batch_size]
-            embeddings = self.embedder.embed_documents([chunk.text for chunk in batch])
+            cached = {}
+            if reusable:
+                old_ids = [
+                    stable_id(active["snapshot_id"], chunk.id) for chunk in batch
+                ]
+                evidence = {
+                    record["_id"]: record
+                    for record in self.store.chunks.find(
+                        {
+                            "_id": {"$in": old_ids},
+                            "corpus_id": corpus.corpus_id,
+                            "snapshot_id": active["snapshot_id"],
+                        }
+                    )
+                }
+                expected = {chunk.id: chunk.model_dump() for chunk in batch}
+                for point in self.vectors.retrieve(
+                    self.collection, ids=old_ids, with_vectors=True, with_payload=True
+                ):
+                    record = evidence.get(str(point.id))
+                    if (
+                        record
+                        and point.payload
+                        and point.payload.get("chunk_id") == record["chunk"]["id"]
+                        and record["chunk"] == expected.get(record["chunk"]["id"])
+                    ):
+                        cached[record["chunk"]["id"]] = point.vector
+            missing = [chunk for chunk in batch if chunk.id not in cached]
+            fresh = (
+                self.embedder.embed_documents([chunk.text for chunk in missing])
+                if missing
+                else []
+            )
+            validate_vectors(fresh, len(missing), self.profile.dimensions)
+            cached.update({chunk.id: vector for chunk, vector in zip(missing, fresh)})
+            embeddings = [cached[chunk.id] for chunk in batch]
             validate_vectors(embeddings, len(batch), self.profile.dimensions)
+            embedded_count += len(missing)
+            reused_count += len(batch) - len(missing)
             points = [
                 models.PointStruct(
                     id=stable_id(snapshot_id, chunk.id),
@@ -340,6 +395,11 @@ class ThesisVectorIndex:
                         "corpus_id": corpus.corpus_id,
                         "snapshot_id": snapshot_id,
                         "chunk_id": chunk.id,
+                        "source_id": chunk.source_id,
+                        "version": chunk.version,
+                        "page": chunk.page,
+                        "article": chunk.article,
+                        "section": chunk.section,
                     },
                 )
                 for chunk, embedding in zip(batch, embeddings)
@@ -358,7 +418,13 @@ class ThesisVectorIndex:
             len(chunks),
             self.collection,
         )
-        return {"snapshot_id": snapshot_id, "chunks": len(chunks), "status": "indexed"}
+        return {
+            "snapshot_id": snapshot_id,
+            "chunks": len(chunks),
+            "status": "indexed",
+            "embedded_chunks": embedded_count,
+            "reused_chunks": reused_count,
+        }
 
     def search(self, corpus_id: str, query: str, limit: int = 5) -> list[SearchHit]:
         """Retrieve one active snapshot, preserve rank, and fail on missing evidence."""

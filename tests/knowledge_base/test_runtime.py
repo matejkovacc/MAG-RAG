@@ -43,10 +43,10 @@ def test_defaults_are_isolated_and_repr_excludes_secrets() -> None:
     [
         ("THESIS_MONGO_DB", "other"),
         ("THESIS_QDRANT_COLLECTION", "other"),
-        ("THESIS_MONGO_DB", "finrep"),
-        ("THESIS_MONGO_DB", "finrep_thesis_unrelated"),
-        ("THESIS_QDRANT_COLLECTION", "finrep"),
-        ("THESIS_QDRANT_COLLECTION", "finrep_thesis_unrelated"),
+        ("THESIS_MONGO_DB", "mag_ragother"),
+        ("THESIS_STORAGE_NAMESPACE", "admin"),
+        ("THESIS_QDRANT_COLLECTION", "mag_ragother"),
+        ("THESIS_STORAGE_NAMESPACE", "bad/name"),
         ("AZURE_OPENAI_EMBEDDER_DIM", "0"),
         ("AZURE_OPENAI_EMBEDDER_DIM", "invalid"),
     ],
@@ -91,14 +91,15 @@ def test_cloud_disabled_before_reading_configuration(monkeypatch) -> None:
             pytest.fail("Cloud access must be opt-in per invocation")
 
 
-def test_explicit_legacy_thesis_storage_is_supported() -> None:
-    """Reuse the old thesis storage only when selected explicitly in settings."""
+def test_explicit_storage_namespace_is_supported() -> None:
+    """An existing thesis namespace is accepted only when explicitly configured."""
     settings = RetrievalSettings.from_values(
         {
             **values(),
-            "THESIS_MONGO_DB": "finrep_thesis",
-            "THESIS_QDRANT_COLLECTION": "finrep_thesis_chunks",
+            "THESIS_STORAGE_NAMESPACE": "archived_thesis",
+            "THESIS_MONGO_DB": "archived_thesis",
+            "THESIS_QDRANT_COLLECTION": "archived_thesis_chunks",
         }
     )
-    assert settings.mongo_database == "finrep_thesis"
-    assert settings.collection == "finrep_thesis_chunks"
+    assert settings.mongo_database == "archived_thesis"
+    assert settings.collection == "archived_thesis_chunks"

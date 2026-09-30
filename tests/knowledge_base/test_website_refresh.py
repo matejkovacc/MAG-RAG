@@ -266,7 +266,7 @@ def test_redirect_validation_happens_before_next_request():
 
 def test_legacy_pdf_serialization_and_frozen_digest_are_unchanged():
     """Adding HTML fields must not invalidate already recorded pilot experiments."""
-    path = Path("data/thesis/corpus.json")
+    path = Path("data/thesis/development/corpus.json")
     if not path.exists():
         pytest.skip("Local frozen pilot artifact not installed")
     raw = json.loads(path.read_text(encoding="utf-8"))

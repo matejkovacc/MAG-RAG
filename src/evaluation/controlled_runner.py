@@ -118,6 +118,7 @@ def run_controlled(
         "corpus_id": dataset.corpus_id,
         "protocol": dataset.protocol,
         "corpus_sha256": dataset.corpus_sha256,
+        "corpus_snapshot_id": dataset.corpus_snapshot_id,
         "dataset_sha256": hashlib.sha256(
             dataset.model_dump_json().encode()
         ).hexdigest(),

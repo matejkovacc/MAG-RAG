@@ -125,6 +125,19 @@ def main() -> None:
         action="store_true",
         help="Enable cloud calls for this run only, after explicit approval",
     )
+    verify = commands.add_parser(
+        "verify", help="Audit published Mongo/Qdrant provenance; no embedding calls"
+    )
+    verify.add_argument("--corpus", type=Path, required=True)
+    verify.add_argument("--output", type=Path, required=True)
+    verify.add_argument("--allow-external-api", action="store_true")
+    smoke = commands.add_parser(
+        "smoke", help="Seven retrieval-only regulation queries; no generated answers"
+    )
+    smoke.add_argument("--corpus-id", required=True)
+    smoke.add_argument("--output", type=Path, required=True)
+    smoke.add_argument("--limit", type=int, default=5)
+    smoke.add_argument("--allow-external-api", action="store_true")
     args = parser.parse_args()
     try:
         if args.command == "refresh":
@@ -144,7 +157,11 @@ def main() -> None:
             )
             print(
                 json.dumps(
-                    {key: value for key, value in report.items() if key != "sources"},
+                    {
+                        key: value
+                        for key, value in report.items()
+                        if key not in {"sources", "captures", "discovery"}
+                    },
                     ensure_ascii=True,
                     indent=2,
                 )
@@ -193,14 +210,24 @@ def main() -> None:
             from src.knowledge_base.runtime import configured_index
 
             corpus = None
-            if args.command == "index":
+            if args.command in {"index", "verify"}:
                 corpus = PreparedCorpus.model_validate_json(
                     args.corpus.read_text(encoding="utf-8")
                 )
+            if args.command in {"verify", "smoke"} and args.output.exists():
+                raise ValueError("Audit output already exists; use a new path")
             with configured_index(
                 allow_external_api=args.allow_external_api
             ) as service:
-                if corpus is not None:
+                if args.command == "verify":
+                    from src.knowledge_base.verification import verify_index
+
+                    result = verify_index(service, corpus)
+                elif args.command == "smoke":
+                    from src.knowledge_base.verification import smoke_search
+
+                    result = smoke_search(service, args.corpus_id, args.limit)
+                elif corpus is not None:
                     result = service.index(corpus)
                 else:
                     result = [
@@ -209,7 +236,16 @@ def main() -> None:
                             args.corpus_id, args.query, args.limit
                         )
                     ]
+            if args.command in {"verify", "smoke"}:
+                args.output.parent.mkdir(parents=True, exist_ok=True)
+                args.output.write_text(
+                    json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8"
+                )
             print(json.dumps(result, ensure_ascii=True, indent=2))
+            if args.command == "verify" and not result["ok"]:
+                parser.exit(
+                    1, "Published corpus verification failed; inspect the audit\n"
+                )
     except ImportError:
         parser.exit(
             1,

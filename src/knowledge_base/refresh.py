@@ -1,6 +1,8 @@
 """Explicit, bounded website refresh into immutable local corpus candidates."""
 
 import hashlib
+import gzip
+import io
 import json
 import shutil
 import subprocess
@@ -11,12 +13,24 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Literal
 from urllib.error import HTTPError
-from urllib.parse import urldefrag, urljoin, urlsplit
+from urllib.parse import urljoin, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, model_validator
 
-from src.knowledge_base.models import PreparedCorpus, SourceSpec
+from src.knowledge_base.models import PreparedCorpus, SourceSpec, RegulationMetadata
+from src.knowledge_base.discovery import (
+    LANDING_PAGE,
+    OFFICIAL_HOSTS,
+    canonical_url,
+    discover_regulations,
+    official_document_links,
+    source_key,
+    labelled_date,
+    AMENDMENT,
+    navigation_link,
+    pisrs_document,
+)
 from src.knowledge_base.prepare import prepare_document
 from src.knowledge_base.website import prepare_html
 
@@ -27,17 +41,25 @@ USER_AGENT = "MagRagSourceRefresh/1.0"
 
 
 class RefreshSource(BaseModel):
-    """One approved source; discovery never silently expands this list."""
+    """One configured or landing-page-discovered source."""
 
     model_config = ConfigDict(extra="forbid")
     key: str = Field(pattern=r"^[a-z0-9][a-z0-9-]{0,99}$")
     title: str = Field(min_length=1)
     url: HttpUrl
-    format: Literal["html", "pdf"] = "html"
+    format: Literal["html", "pdf", "doc", "docx"] = "html"
     selector_id: str = "katedre-container"
     excluded_pages: list[int] = Field(default_factory=list)
     excluded_edge_lines: list[str] = Field(default_factory=list)
     notes: str = ""
+    regulation: RegulationMetadata | None = None
+
+
+class DiscoverySpec(BaseModel):
+    """Opt in to the bounded FRI regulation discovery scope."""
+
+    model_config = ConfigDict(extra="forbid")
+    landing_page: Literal[LANDING_PAGE] = LANDING_PAGE
 
 
 class RefreshManifest(BaseModel):
@@ -46,30 +68,33 @@ class RefreshManifest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     corpus_id: str = Field(min_length=1)
     base_corpus: str | None = None
-    sources: list[RefreshSource] = Field(min_length=1, max_length=50)
+    sources: list[RefreshSource] = Field(default_factory=list, max_length=50)
+    discovery: DiscoverySpec | None = None
 
     @model_validator(mode="after")
     def unique_sources(self) -> "RefreshManifest":
         """Reject duplicate identities and unsupported destinations before fetching."""
         if len({source.key for source in self.sources}) != len(self.sources):
             raise ValueError("Duplicate refresh source key")
+        if not self.sources and not self.discovery:
+            raise ValueError("Refresh requires sources or explicit discovery")
         for source in self.sources:
             validate_url(str(source.url))
         return self
 
 
-def validate_url(url: str) -> str:
+def validate_url(url: str, allowed_hosts: frozenset[str] = ALLOWED_HOSTS) -> str:
     """Allow only official FRI HTTPS hosts, including on every redirect."""
     parts = urlsplit(url)
     if (
         parts.scheme != "https"
-        or parts.hostname not in ALLOWED_HOSTS
+        or parts.hostname not in allowed_hosts
         or parts.port not in {None, 443}
         or parts.username
         or parts.password
     ):
         raise ValueError("Website refresh only supports official FRI HTTPS hosts")
-    return urldefrag(url)[0]
+    return canonical_url(url)
 
 
 @dataclass
@@ -169,10 +194,14 @@ def curl_fetch(url: str) -> FetchResult:
         )
 
 
-def fetch_source(url: str, transport: Callable[[str], FetchResult]) -> FetchResult:
+def fetch_source(
+    url: str,
+    transport: Callable[[str], FetchResult],
+    allowed_hosts: frozenset[str] = ALLOWED_HOSTS,
+) -> FetchResult:
     """Follow at most three validated redirects; never retry a failed source."""
     for _ in range(4):
-        url = validate_url(url)
+        url = validate_url(url, allowed_hosts)
         response = transport(url)
         if response.status in {301, 302, 303, 307, 308}:
             if not response.headers.get("location"):
@@ -183,6 +212,11 @@ def fetch_source(url: str, transport: Callable[[str], FetchResult]) -> FetchResu
             raise ValueError(f"Website HTTP status {response.status}")
         if len(response.content) > MAX_BYTES:
             raise ValueError("Website response exceeds size limit")
+        if response.headers.get("content-encoding", "").lower() == "gzip":
+            with gzip.GzipFile(fileobj=io.BytesIO(response.content)) as stream:
+                response.content = stream.read(MAX_BYTES + 1)
+            if len(response.content) > MAX_BYTES:
+                raise ValueError("Decoded website response exceeds size limit")
         response.url = url
         return response
     raise ValueError("Website redirect limit exceeded")
@@ -266,12 +300,207 @@ def refresh_sources(
         )
 
     save_report()
+    cache: dict[str, FetchResult] = {}
+    resolution_errors: dict[str, str] = {}
+    allowed_hosts = OFFICIAL_HOSTS if manifest.discovery else ALLOWED_HOSTS
+
+    def capture(url: str) -> FetchResult:
+        """Archive every discovery response; share captures with the preparation loop."""
+        url = validate_url(url, allowed_hosts)
+        if url not in cache:
+            if len(cache) >= 100:
+                raise ValueError("Discovery exceeded 100 captured resources")
+            if cache:
+                time.sleep(delay)
+            response = fetch_source(url, transport, allowed_hosts)
+            digest = hashlib.sha256(response.content).hexdigest()
+            raw = output / "raw" / f"capture-{digest}.bin"
+            raw.write_bytes(response.content)
+            report.setdefault("captures", []).append(
+                {
+                    "url": url,
+                    "final_url": response.url,
+                    "content_sha256": digest,
+                    "bytes": len(response.content),
+                    "path": str(raw),
+                }
+            )
+            cache[url] = response
+            save_report()
+        return cache[url]
+
+    if manifest.discovery:
+        try:
+            landing = capture(manifest.discovery.landing_page)
+            inventory = discover_regulations(
+                landing.content, manifest.discovery.landing_page
+            )
+            report["discovery"] = {
+                "landing_page": manifest.discovery.landing_page,
+                "discovered_links": len(inventory),
+                "classified_regulations": sum(r["included"] for r in inventory),
+                "excluded_links": sum(not r["included"] for r in inventory),
+                "links": inventory,
+            }
+            for entry in inventory:
+                if not entry["included"]:
+                    continue
+                item = RefreshSource(
+                    **{
+                        k: entry[k]
+                        for k in ("key", "title", "url", "format", "regulation")
+                    }
+                )
+                if urlsplit(str(item.url)).hostname in {"pisrs.si", "www.pisrs.si"}:
+                    try:
+                        capture(str(item.url))
+                        resolved = pisrs_document(str(item.url), capture)
+                        item = item.model_copy(
+                            update={
+                                "url": resolved["url"],
+                                "format": "pdf",
+                                "regulation": item.regulation.model_copy(
+                                    update={
+                                        "document_type": "pdf",
+                                        "version_label": resolved["version_label"],
+                                        "discovery_path": [
+                                            manifest.discovery.landing_page
+                                        ]
+                                        + resolved["discovery_path"],
+                                    }
+                                ),
+                            }
+                        )
+                        entry["resolved_documents"] = [resolved]
+                    except (OSError, ValueError, subprocess.SubprocessError) as exc:
+                        resolution_errors[item.key] = str(exc)
+                if item.format == "html" and urlsplit(str(item.url)).hostname in {
+                    "uni-lj.si",
+                    "www.uni-lj.si",
+                }:
+                    try:
+                        portal = capture(str(item.url))
+                        path = [
+                            manifest.discovery.landing_page,
+                            str(item.url),
+                            portal.url,
+                        ]
+                        family = item.regulation.subcategory
+                        links = official_document_links(
+                            portal.content, portal.url, family
+                        )
+                        if not links and family == "disciplinary":
+                            # The FRI link currently redirects to UL's study landing page.
+                            # Recover only through observed official directory links.
+                            for label in (
+                                "Pravni akti",
+                                "Pravice in dolžnosti študentov",
+                            ):
+                                portal = capture(
+                                    navigation_link(portal.content, portal.url, label)
+                                )
+                                path.append(portal.url)
+                            links = official_document_links(
+                                portal.content, portal.url, family
+                            )
+                        if not links:
+                            raise ValueError(
+                                "Official portal contains no matching regulation documents"
+                            )
+                        base_links = [
+                            link
+                            for link in links
+                            if not AMENDMENT.search(link["title"])
+                        ]
+                        parent = next(
+                            (
+                                link
+                                for link in base_links
+                                if "prečiščeno" in link["title"]
+                            ),
+                            base_links[0] if base_links else None,
+                        )
+                        for link in links:
+                            metadata = item.regulation.model_copy(
+                                update={
+                                    "document_type": "pdf",
+                                    "discovery_path": list(dict.fromkeys(path)),
+                                    "version_label": link["title"],
+                                    "is_amendment": bool(
+                                        AMENDMENT.search(link["title"])
+                                    ),
+                                    "parent_regulation": (
+                                        source_key(parent["title"], family)
+                                        if parent and AMENDMENT.search(link["title"])
+                                        else None
+                                    ),
+                                    "effective_date": labelled_date(
+                                        link["title"], r"velja(?:jo)? od"
+                                    ),
+                                }
+                            )
+                            sources.append(
+                                RefreshSource(
+                                    key=source_key(link["title"], family),
+                                    title=link["title"],
+                                    url=link["url"],
+                                    format="pdf",
+                                    regulation=metadata,
+                                )
+                            )
+                        entry["resolved_documents"] = links
+                        continue
+                    except (OSError, ValueError, subprocess.SubprocessError) as exc:
+                        resolution_errors[item.key] = str(exc)
+                sources.append(item)
+            if len(sources) > 50 or len({s.key for s in sources}) != len(sources):
+                raise ValueError(
+                    "Discovery has too many sources or duplicate identities"
+                )
+            if len({validate_url(str(s.url), allowed_hosts) for s in sources}) != len(
+                sources
+            ):
+                raise ValueError("Discovery has duplicate source URLs")
+            report["removed_source_keys"] = sorted(
+                set(prior) - {s.key for s in sources}
+            )
+            (output / "discovered-sources.json").write_text(
+                json.dumps(
+                    [s.model_dump(mode="json") for s in sources],
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+        except (OSError, ValueError, subprocess.SubprocessError) as exc:
+            report.update(
+                status="failed",
+                discovery_error=str(exc),
+                next_step="Discovery failed; previous published snapshot is unchanged.",
+            )
+            save_report()
+            return report
     for index, item in enumerate(sources):
         if index:
             time.sleep(delay)
-        record = {"key": item.key, "url": str(item.url), "format": item.format}
+        record = {
+            "key": item.key,
+            "title": item.title,
+            "url": str(item.url),
+            "format": item.format,
+        }
         try:
-            response = fetch_source(str(item.url), transport)
+            if item.key in resolution_errors:
+                raise ValueError(resolution_errors[item.key])
+            if item.format not in {"html", "pdf"}:
+                raise ValueError(
+                    f"Normative {item.format} source needs an extractor; it was not excluded as a form"
+                )
+            response = (
+                capture(str(item.url))
+                if manifest.discovery
+                else fetch_source(str(item.url), transport)
+            )
             content_type = (
                 response.headers.get("content-type", "")
                 .split(";", 1)[0]
@@ -296,6 +525,13 @@ def refresh_sources(
                 notes=item.notes,
                 excluded_pages=item.excluded_pages,
                 excluded_edge_lines=item.excluded_edge_lines,
+                regulation=(
+                    item.regulation.model_copy(
+                        update={"retrieved_at": datetime.now(timezone.utc)}
+                    )
+                    if item.regulation
+                    else None
+                ),
             )
             if item.format == "html":
                 document, links = prepare_html(
@@ -317,6 +553,8 @@ def refresh_sources(
                     data = doc.model_dump(mode="json", exclude={"prepared_at"})
                     data["source"].pop("local_path", None)
                     data["source"].pop("review_status", None)
+                    if data["source"].get("regulation"):
+                        data["source"]["regulation"].pop("retrieved_at", None)
                     if data["source"].get("web"):
                         data["source"]["web"].pop("captured_at", None)
                         # FRI embeds volatile scripts outside the selected body. Do
@@ -344,6 +582,10 @@ def refresh_sources(
                 raw_changed_since_previous=previous_doc is not None
                 and version != previous_doc.content_sha256,
                 chunks=len(document.chunks),
+                pages=len(document.pages),
+                articles=sorted(
+                    {chunk.article for chunk in document.chunks if chunk.article}
+                ),
                 extracted_characters=sum(len(page.text) for page in document.pages),
                 etag=response.headers.get("etag"),
                 last_modified=response.headers.get("last-modified"),
@@ -352,7 +594,10 @@ def refresh_sources(
         except (OSError, ValueError, subprocess.SubprocessError) as exc:
             # Do not publish a reduced corpus or silently represent old content as current.
             record.update(
-                status="failed", error_type=type(exc).__name__, error=str(exc)[:350]
+                status="failed",
+                error_type=type(exc).__name__,
+                error=str(exc)[:350],
+                previous_version_retained=item.key in prior,
             )
         report["sources"].append(record)
         save_report()
@@ -377,5 +622,18 @@ def refresh_sources(
         report["next_step"] = (
             "Inspect the candidate and approve Azure indexing separately; refresh never publishes vectors."
         )
+        # This is the existing prepare input contract, not a second ingestion format.
+        from src.knowledge_base.models import CorpusManifest
+
+        prepared_manifest = CorpusManifest(
+            corpus_id=corpus.corpus_id, sources=[doc.source for doc in documents]
+        )
+        (output / "prepare-manifest.json").write_text(
+            prepared_manifest.model_dump_json(indent=2), encoding="utf-8"
+        )
+    report["successful_documents"] = len(documents)
+    report["failed_documents"] = sum(r["status"] == "failed" for r in report["sources"])
+    report["prepared_pages"] = sum(len(doc.pages) for doc in documents)
+    report["prepared_chunks"] = sum(len(doc.chunks) for doc in documents)
     save_report()
     return report

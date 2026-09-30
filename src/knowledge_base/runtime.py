@@ -16,6 +16,7 @@ from src.knowledge_base.vector_store import (
     MongoEvidenceStore,
     RetrievalError,
     ThesisVectorIndex,
+    validate_namespace,
 )
 
 
@@ -30,6 +31,7 @@ class RetrievalSettings:
     collection: str
     azure_key: str = field(repr=False)
     profile: EmbeddingProfile
+    storage_namespace: str = "mag_rag"
 
     @classmethod
     def from_values(cls, values: Mapping[str, str | None]) -> "RetrievalSettings":
@@ -45,19 +47,18 @@ class RetrievalSettings:
         missing = [key for key in required if not (values.get(key) or "").strip()]
         if missing:
             raise RetrievalError("Missing configuration: " + ", ".join(missing))
-        database = values.get("THESIS_MONGO_DB") or "mag_rag"
-        collection = values.get("THESIS_QDRANT_COLLECTION") or "mag_rag_chunks"
-        # Reuse the explicitly selected thesis index from the original project.
-        if not database.startswith("mag_rag") and database != "finrep_thesis":
+        namespace = validate_namespace(
+            values.get("THESIS_STORAGE_NAMESPACE") or "mag_rag"
+        )
+        database = values.get("THESIS_MONGO_DB") or namespace
+        collection = values.get("THESIS_QDRANT_COLLECTION") or namespace + "_chunks"
+        if database != namespace and not database.startswith(namespace + "_"):
             raise RetrievalError(
-                "THESIS_MONGO_DB must use mag_rag or the legacy finrep_thesis database"
+                "THESIS_MONGO_DB must use the configured thesis namespace"
             )
-        if (
-            not collection.startswith("mag_rag_")
-            and collection != "finrep_thesis_chunks"
-        ):
+        if not collection.startswith(namespace + "_"):
             raise RetrievalError(
-                "THESIS_QDRANT_COLLECTION must use mag_rag_ or legacy finrep_thesis_chunks"
+                "THESIS_QDRANT_COLLECTION must use the configured thesis namespace"
             )
         try:
             dimensions = int(values.get("AZURE_OPENAI_EMBEDDER_DIM") or "3072")
@@ -70,6 +71,7 @@ class RetrievalSettings:
         return cls(
             mongo_uri=str(values["THESIS_MONGO_URI"]),
             mongo_database=database,
+            storage_namespace=namespace,
             qdrant_url=str(values["THESIS_QDRANT_URL"]),
             qdrant_key=values.get("QDRANT_API_KEY") or None,
             collection=collection,
@@ -131,7 +133,9 @@ def configured_index(
             http_client=http_client,
         )
         yield ThesisVectorIndex(
-            MongoEvidenceStore(mongo[settings.mongo_database]),
+            MongoEvidenceStore(
+                mongo[settings.mongo_database], namespace=settings.storage_namespace
+            ),
             vectors,
             embedder,
             settings.profile,

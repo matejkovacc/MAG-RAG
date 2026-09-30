@@ -95,15 +95,17 @@ def index():
     vectors.close()
 
 
-def test_legacy_thesis_store_reuses_snapshot_without_reembedding(index) -> None:
+def test_explicit_namespace_reuses_snapshot_without_reembedding(index) -> None:
     """A renamed application can read the original thesis snapshot unchanged."""
-    index.store = MongoEvidenceStore(mongomock.MongoClient()["finrep_thesis"])
+    index.store = MongoEvidenceStore(
+        mongomock.MongoClient()["archived_thesis"], namespace="archived_thesis"
+    )
     legacy = ThesisVectorIndex(
         index.store,
         index.vectors,
         index.embedder,
         index.profile,
-        "finrep_thesis_chunks",
+        "archived_thesis_chunks",
     )
     prepared = corpus()
     result = legacy.index(prepared)
@@ -113,7 +115,7 @@ def test_legacy_thesis_store_reuses_snapshot_without_reembedding(index) -> None:
         legacy.vectors,
         index.embedder,
         index.profile,
-        "finrep_thesis_chunks",
+        "archived_thesis_chunks",
     )
     hits = reopened.search(prepared.corpus_id, "alpha", limit=1)
     assert hits[0].snapshot_id == result["snapshot_id"]
@@ -121,9 +123,9 @@ def test_legacy_thesis_store_reuses_snapshot_without_reembedding(index) -> None:
     assert index.embedder.calls == calls
 
 
-@pytest.mark.parametrize("name", ["finrep", "finrep_thesis_unrelated"])
-def test_legacy_compatibility_still_rejects_unrelated_storage(index, name) -> None:
-    """Legacy compatibility is an exact exception, not a relaxed prefix guard."""
+@pytest.mark.parametrize("name", ["other", "archived_thesis_unrelated"])
+def test_default_namespace_rejects_unrelated_storage(index, name) -> None:
+    """A custom namespace requires explicit selection; defaults stay isolated."""
     with pytest.raises(RetrievalError):
         MongoEvidenceStore(mongomock.MongoClient()[name])
     with pytest.raises(RetrievalError):
@@ -345,3 +347,44 @@ def test_qdrant_disk_store_survives_reopen(index: ThesisVectorIndex, tmp_path) -
         assert index.search("test", "alpha")[0].snapshot_id == indexed["snapshot_id"]
     finally:
         reopened.close()
+
+
+def test_changed_document_reuses_other_vectors_and_excludes_stale(index):
+    """Reembed only a changed source while publication excludes historical versions."""
+    from src.knowledge_base.verification import verify_index
+
+    first = corpus()
+    old = index.index(first)
+    updated = corpus(texts=("beta changed rule", "alpha rule"))
+    result = index.index(updated)
+    assert result["embedded_chunks"] == 1
+    assert result["reused_chunks"] == 1
+    hits = index.search("test", "beta", limit=100)
+    assert len(hits) == 2
+    assert {h.snapshot_id for h in hits} == {result["snapshot_id"]}
+    assert all(h.snapshot_id != old["snapshot_id"] for h in hits)
+    assert hits[0].chunk.text.endswith("beta changed rule")
+    audit = verify_index(index, updated)
+    assert audit["ok"] and audit["qdrant_active_points"] == 2
+    assert audit["qdrant_corpus_points_including_history"] == 4
+    repeated = index.index(updated)
+    assert repeated["status"] == "unchanged"
+    assert index.vectors.count(index.collection).count == 4
+
+
+def test_verification_detects_missing_source_and_duplicate_url(index):
+    """The audit checks references and URLs, not just equal Mongo/Qdrant counts."""
+    from src.knowledge_base.verification import verify_index
+
+    prepared = corpus()
+    index.index(prepared)
+    first, second = list(index.store.sources.find({}))
+    index.store.sources.update_one(
+        {"_id": second["_id"]}, {"$set": {"source.url": first["source"]["url"]}}
+    )
+    audit = verify_index(index, prepared)
+    assert not audit["ok"] and audit["duplicates"]["source_urls"]
+    index.store.sources.delete_one({"_id": first["_id"]})
+    audit = verify_index(index, prepared)
+    assert not audit["ok"]
+    assert any("Vector/source identity mismatch" in error for error in audit["errors"])

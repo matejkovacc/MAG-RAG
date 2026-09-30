@@ -1,6 +1,6 @@
 """Validated source records and portable document preparation output."""
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal
 
 from pydantic import (
@@ -37,6 +37,24 @@ class WebMetadata(BaseModel):
         return data
 
 
+class RegulationMetadata(BaseModel):
+    """Discovery provenance, without asserting that linked rules are legally current."""
+
+    model_config = ConfigDict(extra="forbid")
+    landing_page: HttpUrl
+    linked_url: HttpUrl
+    category: Literal["regulation", "instruction"] = "regulation"
+    subcategory: str
+    document_type: str
+    publication_date: date | None = None
+    effective_date: date | None = None
+    version_label: str | None = None
+    is_amendment: bool = False
+    parent_regulation: str | None = None
+    retrieved_at: datetime | None = None
+    discovery_path: list[str] = Field(default_factory=list)
+
+
 class SourceSpec(BaseModel):
     """Human-maintained identity and provenance for a public PDF or HTML snapshot."""
 
@@ -53,6 +71,7 @@ class SourceSpec(BaseModel):
     review_status: Literal["pending", "reviewed"] = "pending"
     notes: str = ""
     web: WebMetadata | None = None
+    regulation: RegulationMetadata | None = None
 
     @model_serializer(mode="wrap")
     def serialize_source(self, handler):
@@ -60,6 +79,8 @@ class SourceSpec(BaseModel):
         data = handler(self)
         if self.web is None:
             data.pop("web", None)
+        if self.regulation is None:
+            data.pop("regulation", None)
         return data
 
     @model_validator(mode="after")
@@ -107,6 +128,15 @@ class EvidenceChunk(BaseModel):
     end: int = Field(gt=0)
     article: str | None
     text: str = Field(min_length=1)
+    section: str | None = None
+
+    @model_serializer(mode="wrap")
+    def serialize_chunk(self, handler):
+        """Keep frozen legacy evidence fingerprints unchanged when no section exists."""
+        data = handler(self)
+        if self.section is None:
+            data.pop("section", None)
+        return data
 
 
 class PreparedDocument(BaseModel):

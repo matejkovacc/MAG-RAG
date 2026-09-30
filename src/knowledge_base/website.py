@@ -116,7 +116,21 @@ def plain_text(node: Element) -> str:
             parts.append(child)
         else:
             parts.append(plain_text(child))
-            if child.tag in {"p", "div", "li", "br", "tr", "td", "th"}:
+            if child.tag in {
+                "p",
+                "div",
+                "li",
+                "br",
+                "tr",
+                "td",
+                "th",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+            }:
                 parts.append("\n")
     return "".join(parts)
 
@@ -272,10 +286,19 @@ def prepare_html(
     web = WebMetadata(captured_at=captured, selector_id=selector_id, sections=sections)
     source = source.model_copy(update={"web": web, "review_status": "pending"})
     chunks = split_pages(pages, source_id, version, [], max_chars, overlap)
-    # HTML section indexes must never imply a regulation article or PDF page.
+    # Article labels are retained only for explicitly classified regulations.
     chunks = [
         chunk.model_copy(
-            update={"article": None, "id": stable_id("html-section-v1", chunk.id)}
+            update={
+                "article": chunk.article if source.regulation else None,
+                "section": (
+                    sections[chunk.page - 1].heading if source.regulation else None
+                ),
+                "id": stable_id(
+                    "html-regulation-v1" if source.regulation else "html-section-v1",
+                    chunk.id,
+                ),
+            }
         )
         for chunk in chunks
     ]
