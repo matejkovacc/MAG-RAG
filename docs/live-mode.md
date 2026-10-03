@@ -49,3 +49,11 @@ procesa, ne denarna omejitev naročnine. Azure prejme vprašanje in uporabljene 
 
 Shranjeni auditi so dokazi prejšnjih zagonov. Kopiranje kode ali korpusa ne potrdi,
 da je trenutna objava v podatkovni bazi ista; to preverite pred nadaljnjo evalvacijo.
+
+
+## Spletne strani ob vsakem vprašanju
+
+Za trenutne uradne strani dodajte `--current-website --allow-website-fetch`.
+Seznam dovoljenih strani, tehnični preizkus in omejitve so opisani v
+[sprotnem zajemu in inventarju PDF](current-website.md). Objavljeni korpus PDF
+ostane izrecno izbran; spletni zajem ne osveži njegovih vektorjev.

@@ -66,6 +66,17 @@ class Draft(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+class WebsiteCheck(BaseModel):
+    """Server-owned outcome of an official-page request for this question."""
+
+    url: str
+    title: str
+    status: Literal["fetched", "failed"]
+    checked_at: str
+    version: str | None = None
+    error: str | None = None
+
+
 class Citation(BaseModel):
     """Server-owned provenance, never a URL invented by a generator."""
 
@@ -75,6 +86,7 @@ class Citation(BaseModel):
     page: int | None
     section: str | None = None
     captured_at: str | None = None
+    retrieved_live: bool = False
     article: str | None
     version: str
     review_status: str
@@ -90,6 +102,7 @@ class Answer(BaseModel):
     parts: list[AnswerPart] = Field(default_factory=list)
     citations: list[Citation] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
+    website_checks: list[WebsiteCheck] = Field(default_factory=list)
 
 
 class Retriever(Protocol):
@@ -155,10 +168,24 @@ class AnswerService:
         evidence = self.retriever.search(
             request.retrieval_query(), limit=self.retrieval_limit
         )
+        checks = (
+            self.retriever.website_checks()
+            if hasattr(self.retriever, "website_checks")
+            else []
+        )
+        website_warnings = (
+            [
+                "Nekaterih uradnih strani ni bilo mogoče preveriti; odgovor lahko manjka ali je nepopoln."
+            ]
+            if any(check.status == "failed" for check in checks)
+            else []
+        )
         if not evidence:
             return Answer(
                 mode=self.mode,
                 status="no_evidence",
+                website_checks=checks,
+                warnings=website_warnings,
                 message=(
                     "Ni ujemajočih se odlomkov. Poskusite z izrazi iz pravilnika ali se obrnite na referat."
                 ),
@@ -182,6 +209,8 @@ class AnswerService:
             return Answer(
                 mode=self.mode,
                 status=draft.status,
+                website_checks=checks,
+                warnings=website_warnings,
                 message=(
                     draft.message
                     if draft.status == "needs_clarification"
@@ -211,6 +240,7 @@ class AnswerService:
                 captured_at=(
                     hit.source.web.captured_at.isoformat() if hit.source.web else None
                 ),
+                retrieved_live=hit.retrieval_origin == "current_website",
                 article=hit.chunk.article,
                 version=hit.chunk.version,
                 review_status=hit.source.review_status,
@@ -239,5 +269,6 @@ class AnswerService:
             ),
             parts=draft.parts,
             citations=citations,
-            warnings=warnings,
+            warnings=warnings + website_warnings,
+            website_checks=checks,
         )

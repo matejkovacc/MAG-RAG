@@ -321,3 +321,18 @@ def test_unpublished_refresh_cannot_be_advertised_as_the_live_corpus():
         document.source.notes = "New source configuration not yet indexed"
         with pytest.raises(ValueError, match="not the published snapshot"):
             require_published_corpus(service.retriever.index, corpus)
+
+
+def test_full_width_table_title_keeps_cost_amount_alignment():
+    """The observed enrolment layout is a title followed by ordinary paired cells."""
+    from src.knowledge_base.website import ContentParser, descendants, table_text
+
+    parser = ContentParser()
+    parser.feed(
+        '<table><tr><td colspan="2">COSTS FIXTURE</td></tr><tr><td>Library fixture</td><td>18.90</td></tr><tr><td>Equipment fixture</td><td>14.70</td></tr></table>'
+    )
+    table = next(n for n in descendants(parser.root) if n.tag == "table")
+    assert (
+        table_text(table)
+        == "COSTS FIXTURE\nLibrary fixture | 18.90\nEquipment fixture | 14.70"
+    )

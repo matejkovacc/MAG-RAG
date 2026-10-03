@@ -48,11 +48,13 @@ modela ali poznavanja pravilnikov. Izhodna mapa za pripravo mora biti nova.
 
 [Priprava podatkov](docs/data.md) opisuje javne vire. Razširjeno odkrivanje,
 pripravo in preverjanje pravilnikov opisuje [postopek za pravilnike](docs/regulations.md).
-Lokalni shranjeni kandidat iz 23. 9. 2026 vsebuje 22 dokumentov in 903 odlomke;
-ni v Git in njegova vsebinska veljavnost še zahteva pregled. Če ga imate lokalno:
+Lokalni korpus `fri-all-pdfs` iz 3. 10. 2026 vsebuje 42 dokumentov in 1.077
+odlomkov; objava v MongoDB/Qdrantu je preverjena. Ni v Git, njegova vsebinska
+veljavnost pa še zahteva pregled. Prejšnji 22-dokumentni posnetek ostaja ločen.
+Če imate novi korpus lokalno:
 
 ```powershell
-.venv/Scripts/python.exe -m src.rag --corpus data/thesis/regulations/2026-09-23-ready/corpus.json --port 10130
+.venv/Scripts/python.exe -m src.rag --corpus data/thesis/all-pdfs/2026-10-03/corpus.json --port 10130
 ```
 
 Za semantično iskanje in generiranje glejte [live način](docs/live-mode.md).
@@ -106,3 +108,12 @@ Pravilni ID citata ne dokazuje pravilnosti razlage ali veljavnosti pravila.
 Samodejne metrike prekrivanja besedila niso človeška presoja ali rezultati RAGAs.
 Ni še neodvisne končne evalvacije z resničnimi vprašanji referata.
 Izvor kode in status gradiva sta opisana v [ATTRIBUTION.md](ATTRIBUTION.md).
+
+
+## Dopolnitev virov in sprotni spletni zajem
+
+Preverjanje 3. 10. 2026 je pripravilo 42 povezanih PDF (20 dodatnih glede na
+prejšnji korpus). Korpus je objavljen in preverjen v lokalnem semantičnem indeksu.
+Izbirni način `--current-website --allow-website-fetch` ob vprašanju prebere
+deset uradnih strani FRI. [Navodila, rezultati preverjanja in omejitve](docs/current-website.md)
+ločujejo pridobivanje svežih strani od odobrenih klicev generatorja.

@@ -59,7 +59,9 @@ class SearchHit(BaseModel):
     chunk: EvidenceChunk
     source: SourceSpec
     citation_url: str
-    retrieval_origin: Literal["ranked", "article_neighbor"] = "ranked"
+    retrieval_origin: Literal["ranked", "article_neighbor", "current_website"] = (
+        "ranked"
+    )
     seed_chunk_id: str | None = None
 
 

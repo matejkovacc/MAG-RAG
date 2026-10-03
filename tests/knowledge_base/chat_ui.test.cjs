@@ -182,3 +182,19 @@ test("model and evidence text render as text rather than HTML", async () => {
   assert.equal(app.get("results").querySelector(".answer-text").textContent, text);
   assert.equal(app.get("results").querySelector(".answer-text").innerHTML, undefined);
 });
+
+
+test("fresh citations and failed checks are disclosed in the answer", async () => {
+  const response = answer();
+  response.citations[0].page = null;
+  response.citations[0].section = "Office hours";
+  response.citations[0].retrieved_live = true;
+  response.citations[0].captured_at = "2026-10-03T12:00:00+00:00";
+  response.website_checks = [{ title: "Unavailable page", status: "failed", checked_at: "2026-10-03T12:00:00+00:00" }];
+  const app = await browser({ response: () => response });
+  await app.ask("Office hours?");
+  function textTree(node) { return node.textContent + node.children.map(textTree).join(" "); }
+  const text = textTree(app.get("results"));
+  assert.match(text, /Prebrano ob tem vprašanju/);
+  assert.match(text, /Unavailable page: preverjanje ni uspelo/);
+});

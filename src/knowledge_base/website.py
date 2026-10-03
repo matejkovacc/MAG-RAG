@@ -145,20 +145,52 @@ def normalize(text: str) -> str:
 def table_text(node: Element) -> str:
     """Preserve explicit row/cell boundaries instead of flattening office-hour tables."""
     rows = []
-    for row in descendants(node):
+    table_rows = [row for row in descendants(node) if row.tag == "tr"]
+    for row_index, row in enumerate(table_rows):
         if row.tag != "tr":
             continue
         cells = []
         for cell in row.children:
             if not isinstance(cell, Element) or cell.tag not in {"td", "th"}:
                 continue
-            if (
-                cell.attrs.get("colspan", "1") != "1"
-                or cell.attrs.get("rowspan", "1") != "1"
-            ):
+            if cell.attrs.get("rowspan", "1") != "1":
                 raise PreparationError(
                     "Merged HTML table cells require a reviewed extractor"
                 )
+            if cell.attrs.get("colspan", "1") != "1":
+                # Observed FRI enrolment layout: one title spanning the entire
+                # first row, followed by ordinary cost/amount pairs. Preserve the
+                # title once; do not flatten arbitrary merged data cells.
+                data_rows = [
+                    [
+                        c
+                        for c in r.children
+                        if isinstance(c, Element) and c.tag in {"td", "th"}
+                    ]
+                    for r in table_rows[1:]
+                ]
+                row_cells = [
+                    c
+                    for c in row.children
+                    if isinstance(c, Element) and c.tag in {"td", "th"}
+                ]
+                if (
+                    row_index != 0
+                    or len(row_cells) != 1
+                    or not data_rows
+                    or not all(
+                        str(len(cells)) == cell.attrs["colspan"]
+                        and all(
+                            c.attrs.get("colspan", "1") == "1"
+                            and c.attrs.get("rowspan", "1") == "1"
+                            for c in cells
+                        )
+                        for cells in data_rows
+                    )
+                ):
+                    raise PreparationError(
+                        "Merged HTML table cells require a reviewed extractor"
+                    )
             cells.append(" ".join(plain_text(cell).split()))
         if cells:
             rows.append(" | ".join(cells))
@@ -307,7 +339,7 @@ def prepare_html(
             source_id=source_id,
             source=source,
             content_sha256=version,
-            extraction_version="stdlib-html-v1",
+            extraction_version="stdlib-html-v2",
             chunking_version=f"html-section-v1:{max_chars}:{overlap}",
             prepared_at=captured,
             pages=pages,

@@ -166,7 +166,25 @@ def main() -> None:
         action="store_true",
         help="Use real MongoDB/Qdrant on fixed loopback hosts; models remain disabled",
     )
+    parser.add_argument(
+        "--current-website",
+        action="store_true",
+        help="Fetch allowlisted FRI pages during every question",
+    )
+    parser.add_argument(
+        "--allow-website-fetch",
+        action="store_true",
+        help="Allow public FRI page downloads for this run",
+    )
+    parser.add_argument(
+        "--website-manifest", type=Path, default=Path("config/fri-current-website.json")
+    )
+    parser.add_argument(
+        "--website-transport", choices=("curl", "urllib"), default="curl"
+    )
     args = parser.parse_args()
+    if args.current_website != args.allow_website_fetch:
+        parser.error("Use --current-website and --allow-website-fetch together")
     if args.live and (not args.allow_external_api or args.local_databases):
         parser.error(
             "Live mode requires --allow-external-api and cannot combine with --local-databases"
@@ -176,6 +194,14 @@ def main() -> None:
     if not 1024 <= args.port <= 65535:
         parser.error("Port must be between 1024 and 65535")
     try:
+        website_manifest = None
+        if args.current_website:
+            from src.rag.current_website import CurrentWebsiteRetriever, WebsiteManifest
+            from src.knowledge_base.refresh import curl_fetch, urllib_fetch
+
+            website_manifest = WebsiteManifest.model_validate_json(
+                args.website_manifest.read_text(encoding="utf-8")
+            )
         corpus = PreparedCorpus.model_validate_json(
             args.corpus.read_text(encoding="utf-8")
         )
@@ -190,7 +216,22 @@ def main() -> None:
             else offline_service(corpus, local_databases=args.local_databases)
         )
         with context as service:
+            if website_manifest is not None:
+                service.retriever = CurrentWebsiteRetriever(
+                    service.retriever,
+                    website_manifest,
+                    allow_website_fetch=True,
+                    transport=(
+                        curl_fetch if args.website_transport == "curl" else urllib_fetch
+                    ),
+                )
             metadata = {
+                "website_access": (
+                    "per_question" if args.current_website else "snapshot"
+                ),
+                "current_website_sources": (
+                    len(website_manifest.sources) if website_manifest else 0
+                ),
                 "mode": "generated" if args.live else "simulated",
                 "external_api_calls": args.live,
                 "documents": len(corpus.documents),

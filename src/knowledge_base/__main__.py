@@ -96,6 +96,13 @@ def main() -> None:
     refresh.add_argument(
         "--delay", type=float, default=1.0, help="Seconds between sources (0-60)"
     )
+    sync = commands.add_parser(
+        "sync-pdfs", help="Acquire all linked PDFs; no model calls or indexing"
+    )
+    sync.add_argument("--output", type=Path, required=True)
+    sync.add_argument("--previous", type=Path)
+    sync.add_argument("--allow-website-fetch", action="store_true")
+    sync.add_argument("--transport", choices=("curl", "urllib"), default="curl")
     prepare = commands.add_parser("prepare")
     prepare.add_argument("--manifest", type=Path, required=True)
     prepare.add_argument("--output", type=Path, required=True)
@@ -140,7 +147,31 @@ def main() -> None:
     smoke.add_argument("--allow-external-api", action="store_true")
     args = parser.parse_args()
     try:
-        if args.command == "refresh":
+        if args.command == "sync-pdfs":
+            from src.knowledge_base.documents import sync_pdfs
+            from src.knowledge_base.refresh import curl_fetch, urllib_fetch
+
+            report = sync_pdfs(
+                args.output,
+                previous=args.previous,
+                allow_website_fetch=args.allow_website_fetch,
+                transport=curl_fetch if args.transport == "curl" else urllib_fetch,
+            )
+            print(
+                json.dumps(
+                    {
+                        k: v
+                        for k, v in report.items()
+                        if k not in {"documents", "landing_links"}
+                    },
+                    indent=2,
+                )
+            )
+            if not report["corpus_complete"]:
+                parser.exit(
+                    1, "PDF coverage or extraction incomplete; inspect inventory.json\n"
+                )
+        elif args.command == "refresh":
             from src.knowledge_base.refresh import (
                 curl_fetch,
                 refresh_sources,

@@ -75,11 +75,21 @@ function showAnswer(answer, target, turn) {
         link.rel = "noopener noreferrer";
         source.append(link);
       }
-      if (citation.captured_at) source.append(element("p", `Zajeto: ${citation.captured_at.slice(0, 10)}. Stran se je lahko od takrat spremenila.`, "source-date"));
+      if (citation.captured_at) source.append(element("p", citation.retrieved_live
+        ? `Prebrano ob tem vprašanju: ${citation.captured_at}. Datum zajema ne določa veljavnosti vsebine.`
+        : `Zajeto: ${citation.captured_at.slice(0, 10)}. Stran se je lahko od takrat spremenila.`, "source-date"));
       if (citation.review_status !== "reviewed") source.append(element("p", "Veljavnost vira še ni pregledana.", "warning"));
       sources.append(source);
     }
     target.append(sources);
+  }
+  if (answer.website_checks?.length) {
+    const checks = element("details", undefined, "answer-notes");
+    checks.append(element("summary", "Preverjene spletne strani"));
+    for (const check of answer.website_checks) {
+      checks.append(element("p", `${check.title}: ${check.status === "fetched" ? "prebrano" : "preverjanje ni uspelo"} (${check.checked_at})`));
+    }
+    target.append(checks);
   }
   if (answer.warnings.length) {
     const notes = element("details", undefined, "answer-notes");
@@ -158,7 +168,10 @@ async function refreshStatus() {
     liveMode = status.mode === "generated";
     remaining = status.questions_remaining ?? null;
     submit.disabled = inFlight || (liveMode && remaining === 0);
-    document.getElementById("mode-notice").textContent = liveMode ? "" : "Lokalni prikaz: izvirni odlomki iz dokumentov.";
+    document.getElementById("mode-notice").textContent = [
+      liveMode ? "" : "Lokalni prikaz: izvirni odlomki iz dokumentov.",
+      status.website_access === "per_question" ? "Izbrane uradne strani FRI se preberejo ob vsakem vprašanju." : "",
+    ].filter(Boolean).join(" ");
     document.getElementById("session-usage").textContent = liveMode && remaining !== null
       ? (remaining === 0 ? "Omejitev vprašanj je dosežena." : `Na voljo še ${remaining} vprašanj`)
       : "";

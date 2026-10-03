@@ -185,6 +185,7 @@ class GroundedGenerator:
                         if hit.source.web
                         else None
                     ),
+                    "retrieved_live": hit.retrieval_origin == "current_website",
                     "captured_at": (
                         hit.source.web.captured_at.isoformat()
                         if hit.source.web
